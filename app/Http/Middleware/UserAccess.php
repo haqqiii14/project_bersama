@@ -16,7 +16,7 @@ class UserAccess
     public function handle($request, Closure $next, $role)
     {
         if (auth()->user()->type !== $role) {
-            return response()->json(['message' => 'You do not have permission to access this page'], 403);
+            return response()->json(['message' => 'You do not have permission to access this page '.auth()->user()->type], 403);
         }
 
         return $next($request);

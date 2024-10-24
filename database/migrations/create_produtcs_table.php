@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('product_code');
             $table->text('description');
+            $table->string('image')->nullable(); // Tambahkan kolom untuk gambar
             $table->timestamps();
         });
     }

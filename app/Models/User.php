@@ -25,14 +25,17 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
+        'image',
     ];
 
     protected function type(): Attribute
     {
         return new Attribute(
-            get: fn($value) => ["user", "admin"][$value],
+            get: fn($value) => ["user", "admin"][$value] ?? 'unknown', // Mengembalikan 'unknown' jika nilai tidak valid
+            set: fn($value) => array_search($value, ["user", "admin"]), // Mengonversi string menjadi integer
         );
     }
+
 
     /**
      * The attributes that should be hidden for serialization.
