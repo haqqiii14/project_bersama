@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.user')
 
-@section('title', 'Show Product')
+@section('title', 'Detail Product')
 
 @section('contents')
 <h1 class="font-bold text-2xl ml-3">Detail Product</h1>
@@ -43,6 +43,8 @@
                      class="w-min h-auto rounded-lg">
             </div>
         </div>
+
+        <a class="btn btn-primary mt-3" href="">Add Cart</a>
     </div>
 </div>
 @endsection

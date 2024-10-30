@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +19,8 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('home');
-})->name('home');
+    return redirect('/login');
+});
 
 Route::get('/about', [UserController::class, 'about'])->name('about');
 
@@ -38,19 +38,24 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/profile', [UserController::class, 'userprofile'])->name('profile');
+    Route::post('/profile/update', [UserController::class, 'updateprofile'])->name('profile/update');
+    Route::get('/detail', [UserController::class, 'detail'])->name('detail');
+    Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 });
 
 //Admin Routes List
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin/home');
-    Route::get('/admin/profile', [AdminController::class, 'profilepage'])->name('admin/profile');
 
-    //Admin Routes List Product
+    Route::get('/admin/profile', [AdminController::class, 'profilepage'])->name('admin/profile');
+    Route::post('/admin/profile/update', [AdminController::class, 'updateprofile'])->name('admin/profile/update');
+
     Route::get('/admin/products', [ProductController::class, 'index'])->name('admin/products');
     Route::get('/admin/products/create', [ProductController::class, 'create'])->name('admin/products/create');
     Route::post('/admin/products/store', [ProductController::class, 'store'])->name('admin/products/store');
     Route::get('/admin/products/show/{id}', [ProductController::class, 'show'])->name('admin/products/show');
     Route::get('/admin/products/edit/{id}', [ProductController::class, 'edit'])->name('admin/products/edit');
     Route::put('/admin/products/edit/{id}', [ProductController::class, 'update'])->name('admin/products/update');
+
     Route::delete('/admin/products/destroy/{id}', [ProductController::class, 'destroy'])->name('admin/products/destroy');
 });

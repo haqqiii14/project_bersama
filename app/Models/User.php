@@ -25,18 +25,22 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
+        'image',
     ];
 
     protected function type(): Attribute
     {
         return new Attribute(
-            get: fn($value) => match ($value) {
-                0 => 'user',
-                1 => 'admin',
-                default => 'unknow'
-            }
+            get: fn($value) => ["user", "admin"][$value] ?? 'unknown', // Mengembalikan 'unknown' jika nilai tidak valid
+            set: fn($value) => array_search($value, ["user", "admin"]), // Mengonversi string menjadi integer
         );
     }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -14,12 +15,30 @@ class HomeController extends Controller
     //home
     public function index()
     {
-        return view('home');
+        $products = Product::all();
+        return view('home', compact('products'));
     }
 
     //adminhomee
     public function adminHome()
     {
-        return view('dashboard');
+        // Get current date and time
+        $currentDateTime = now(); // Get the current date and time
+        $currentDay = $currentDateTime->format('l'); // Get the day of the week
+        $currentHour = $currentDateTime->format('H'); // Get the hour in 24-hour format
+
+        // Determine the greeting message based on the hour
+        if ($currentHour >= 5 && $currentHour < 12) {
+            $greeting = 'Selamat Pagi'; // Good Morning
+        } elseif ($currentHour >= 12 && $currentHour < 18) {
+            $greeting = 'Selamat Siang'; // Good Afternoon
+        } elseif ($currentHour >= 18 && $currentHour < 21) {
+            $greeting = 'Selamat Sore'; // Good Evening
+        } else {
+            $greeting = 'Selamat Malam'; // Good Night
+        }
+
+        return view('dashboard', compact('greeting', 'currentDay', 'currentDateTime'));
     }
+
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -12,7 +12,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
         $product = Product::orderBy('created_at', 'DESC')->get();
 
         return view('products.index', compact('product'));
@@ -23,7 +22,6 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
         return view('products.create');
     }
 
@@ -32,29 +30,52 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        Product::create($request->all());
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'product_code' => 'required|string|max:255|unique:products',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public'); // Menyimpan gambar ke 'storage/app/public/products'
+        } else {
+            $imagePath = null;
+        }
+
+
+        Product::create([
+            'title' => $request->title,
+            'price' => $request->price,
+            'product_code' => $request->product_code,
+            'description' => $request->description,
+            'image' => $imagePath,
+        ]);
+
 
         return redirect()->route('admin/products')->with('success', 'Product added successfully');
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
         $product = Product::findOrFail($id);
 
         return view('products.show', compact('product'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
         $product = Product::findOrFail($id);
 
         return view('products.edit', compact('product'));
@@ -65,7 +86,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
         $product = Product::findOrFail($id);
 
         $product->update($request->all());
@@ -78,7 +98,6 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
         $product = Product::findOrFail($id);
 
         $product->delete();
