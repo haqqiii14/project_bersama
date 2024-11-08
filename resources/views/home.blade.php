@@ -7,7 +7,7 @@
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold text-gray-900">
             Home
-        </h1> 
+        </h1>
     </div>
 </header>
 <hr />
@@ -28,7 +28,7 @@
                                 <p class="text-gray-800 font-bold mt-2">Harga: Rp{{ number_format($product->price, 2, ',', '.') }}</p>
                                 <p class="text-gray-500">Kode Produk: {{ $product->product_code }}</p>
                                 <div class="mt-4">
-                                    <a href="{{ route('products.show', $product->id) }}" class="text-blue-500 hover:underline">Lihat Detail</a>
+                                    <a href="" class="text-blue-500 hover:underline">Lihat Detail</a>
                                 </div>
                             </div>
                         </div>

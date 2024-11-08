@@ -1,6 +1,6 @@
 @extends('layouts.user')
 
-@section('title', 'About')
+@section('title', 'Keranjang')
 
 @section('contents')
 <header class="bg-white shadow">
@@ -10,6 +10,8 @@
         </h1>
     </div>
 </header>
-<hr />
+<hr/>
+
+
 
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Carbon\Carbon; // Import Carbon
 
 class HomeController extends Controller
 {
@@ -12,19 +13,22 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    //home
+    // Home
     public function index()
     {
         $products = Product::all();
         return view('home', compact('products'));
     }
 
-    //adminhomee
+    // Admin Home
     public function adminHome()
     {
+        // Set the locale to Indonesian
+        Carbon::setLocale('id');
+
         // Get current date and time
-        $currentDateTime = now(); // Get the current date and time
-        $currentDay = $currentDateTime->format('l'); // Get the day of the week
+        $currentDateTime = Carbon::now(); // Use Carbon to get the current date and time
+        $currentDay = $currentDateTime->isoFormat('dddd'); // Get the day in localized format
         $currentHour = $currentDateTime->format('H'); // Get the hour in 24-hour format
 
         // Determine the greeting message based on the hour
@@ -40,5 +44,4 @@ class HomeController extends Controller
 
         return view('dashboard', compact('greeting', 'currentDay', 'currentDateTime'));
     }
-
 }
