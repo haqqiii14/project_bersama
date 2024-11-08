@@ -16,11 +16,12 @@ class ProductSeeder extends Seeder
     {
         // Sample products
         Product::create([
-            'title' => 'Product 1',
+            'title' => 'Jawapos',
             'price' => 100.00,
             'product_code' => 'P001',
             'description' => 'Description for product 1',
-            'image' => 'products/default-product.png',        ]);
+            'image' => 'products/default-product.png',
+        ]);
 
         Product::create([
             'title' => 'Product 2',
@@ -35,6 +36,7 @@ class ProductSeeder extends Seeder
             'price' => 200.00,
             'product_code' => 'P003',
             'description' => 'Description for product 3',
-            'image' => 'products/default-product.png',        ]);
+            'image' => 'products/default-product.png',
+        ]);
     }
 }

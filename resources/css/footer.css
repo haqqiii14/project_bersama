@@ -1,0 +1,25 @@
+/* public/css/styles.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8fafc;
+}
+
+footer {
+    background-color: #1a202c;
+    /* dark gray background for footer */
+    color: #cbd5e0;
+    /* light gray text for footer */
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.875rem;
+    /* small text */
+}
+
+.sidebar {
+    background-color: #1a202c;
+}
+
+.sidebar a:hover {
+    background-color: #4c51bf;
+}

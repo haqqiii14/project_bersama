@@ -22,7 +22,7 @@ class UserController extends Controller
     }
     public function detail()
     {
-        return view('detail');
+        return view('userprofile');
     }
 
     public function updateprofile(Request $request)

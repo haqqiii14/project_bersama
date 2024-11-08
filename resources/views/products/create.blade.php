@@ -1,51 +1,72 @@
 @extends('layouts.app')
 
-@section('title', 'Create Product')
+@section('title', 'Tambah Koran')
 
 @section('contents')
-<h1 class="font-bold text-2xl ml-3">Add Product</h1>
-<hr />
-<div class="border-b border-gray-900/10 pb-12">
-    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+<div class="flex flex-col items-center mt-10">
+    <h1 class="font-bold text-3xl text-indigo-600">Tambah Koran</h1>
+    <p class="text-gray-500 mt-2">Isi form di bawah untuk menambahkan koran baru.</p>
+    <hr class="w-full max-w-lg my-6 border-gray-300" />
+
+    <div class="border border-gray-200 shadow-md rounded-lg p-8 w-full max-w-lg bg-white">
         <form action="{{ route('admin/products/store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="sm:col-span-4">
-                <label class="block text-sm font-medium leading-6 text-gray-900">Title</label>
-                <div class="mt-2">
-                    <input type="text" name="title" id="title" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
+            <div class="mb-5">
+                <label class="block text-sm font-semibold text-gray-700">Title</label>
+                <input type="text" name="title" id="title" required class="block w-full mt-2 px-4 py-2 rounded-md border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 sm:text-sm">
             </div>
 
-            <div class="sm:col-span-4">
-                <label class="block text-sm font-medium leading-6 text-gray-900">Price</label>
-                <div class="mt-2">
-                    <input id="price" name="price" type="number" required step="0.01" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
+            <div class="mb-5">
+                <label class="block text-sm font-semibold text-gray-700">Price</label>
+                <select id="price" name="price" required class="block w-full mt-2 px-4 py-2 rounded-md border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 sm:text-sm">
+                    <option value="" disabled selected></option>
+                    <option value="5.00">5.00</option>
+                    <option value="10.00">10.00</option>
+                    <option value="15.00">15.00</option>
+                    <option value="20.00">20.00</option>
+                </select>
+            </div>
+            
+
+            <div class="mb-5">
+                <label class="block text-sm font-semibold text-gray-700">Product Code</label>
+                <input id="product_code" name="product_code" type="text" required class="block w-full mt-2 px-4 py-2 rounded-md border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 sm:text-sm">
             </div>
 
-            <div class="sm:col-span-4">
-                <label class="block text-sm font-medium leading-6 text-gray-900">Product Code</label>
-                <div class="mt-2">
-                    <input id="product_code" name="product_code" type="text" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
+            <div class="mb-5">
+                <label class="block text-sm font-semibold text-gray-700">Description</label>
+                <textarea name="description" placeholder="Description" rows="3" class="block w-full mt-2 px-4 py-2 rounded-md border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 sm:text-sm"></textarea>
             </div>
 
-            <div class="sm:col-span-4">
-                <label class="block text-sm font-medium leading-6 text-gray-900">Description</label>
-                <div class="mt-2">
-                    <textarea name="description" placeholder="Description" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-                </div>
+            <div class="mb-5">
+                <label class="block text-sm font-semibold text-gray-700">Image</label>
+                <input type="file" name="image" accept="image/*" class="filepond mt-2">
             </div>
 
-            <div class="sm:col-span-4">
-                <label class="block text-sm font-medium leading-6 text-gray-900">Image</label>
-                <div class="mt-2">
-                    <input type="file" name="image" accept="image/*" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
-            </div>
-
-            <button type="submit" class="flex w-full justify-center mt-10 rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
+            <button type="submit" class="w-full rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">Submit</button>
         </form>
     </div>
 </div>
+
+<!-- Include FilePond CSS and JavaScript -->
+<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+
+<!-- FilePond plugins for image preview -->
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+
+<script>
+    // Register the plugin
+    FilePond.registerPlugin(FilePondPluginImagePreview);
+
+    // Turn all file input elements into FilePond instances
+    FilePond.create(document.querySelector('input[name="image"]'), {
+        allowImagePreview: true,
+        imagePreviewHeight: 80,
+        stylePanelAspectRatio: 1,
+        styleLoadIndicatorPosition: 'center bottom',
+        styleButtonRemoveItemPosition: 'center bottom'
+    });
+</script>
 @endsection
