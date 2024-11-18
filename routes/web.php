@@ -25,7 +25,7 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/about', [UserController::class, 'about'])->name('about');
+Route::get('/keranjang', [UserController::class, 'keranjang'])->name('keranjang');
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('register', 'register')->name('register');
@@ -46,6 +46,8 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/profile', [UserController::class, 'userprofile'])->name('profile');
     Route::post('/profile/update', [UserController::class, 'updateprofile'])->name('profile/update');
+
+    Route::get('/products/{id}', [ProductController::class, 'detail'])->name('cart.detail');
 });
 
 //Admin Routes List

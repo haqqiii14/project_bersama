@@ -25,10 +25,8 @@
                             <div class="p-4">
                                 <h2 class="font-bold text-lg">{{ $product->title }}</h2>
                                 <p class="text-gray-600">{{ $product->description }}</p>
-                                <p class="text-gray-800 font-bold mt-2">Harga: Rp{{ number_format($product->price, 2, ',', '.') }}</p>
-                                <p class="text-gray-500">Kode Produk: {{ $product->product_code }}</p>
                                 <div class="mt-4">
-                                    <a href="" class="text-blue-500 hover:underline">Lihat Detail</a>
+                                    <a href="{{ route('cart.detail', $product->id) }}" class="text-blue-500 hover:underline">Lihat Detail</a>
                                 </div>
                             </div>
                         </div>
