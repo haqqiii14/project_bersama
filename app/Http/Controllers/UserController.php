@@ -16,13 +16,9 @@ class UserController extends Controller
         return view('userprofile');
     }
 
-    public function about()
+    public function keranjang()
     {
-        return view('about');
-    }
-    public function detail()
-    {
-        return view('userprofile');
+        return view('keranjang');
     }
 
     public function updateprofile(Request $request)

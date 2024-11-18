@@ -104,4 +104,13 @@ class ProductController extends Controller
 
         return redirect()->route('admin/products')->with('success', 'product deleted successfully');
     }
+
+    public function detail($id)
+    {
+        // Ambil produk berdasarkan ID
+        $product = Product::findOrFail($id);
+
+        // Kembalikan view dengan data produk
+        return view('cart.detail', compact('product'));
+    }
 }
