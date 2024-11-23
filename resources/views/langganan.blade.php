@@ -2,30 +2,36 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-4">Dashboard</h1>
-
-    <div class="row">
-        <!-- Kotak untuk Total Loans -->
-        <div class="col-md-6">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h5 class="card-title">Total Peminjaman</h5>
-                    <p class="display-4">{{ $totalLoans }}</p>
-                    <a href="{{ route('admin.loans.index') }}" class="btn btn-primary">Lihat Semua Peminjaman</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Kotak untuk Total Payments -->
-        <div class="col-md-6">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h5 class="card-title">Total Pembayaran Denda</h5>
-                    <p class="display-4">Rp{{ number_format($totalPayments, 0, ',', '.') }}</p>
-                    <a href="{{ route('admin.payments.index') }}" class="btn btn-primary">Lihat Semua Pembayaran</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1>Admin Dashboard</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>User</th>
+                <th>Package</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($subscriptions as $subscription)
+                <tr>
+                    <td>{{ $subscription->id }}</td>
+                    <td>{{ $subscription->user->name }}</td>
+                    <td>{{ $subscription->package_name }}</td>
+                    <td>{{ $subscription->start_date }}</td>
+                    <td>{{ $subscription->end_date }}</td>
+                    <td>
+                        @if(now()->lt($subscription->end_date))
+                            <span class="badge bg-success">Active</span>
+                        @else
+                            <span class="badge bg-danger">Expired</span>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 @endsection
