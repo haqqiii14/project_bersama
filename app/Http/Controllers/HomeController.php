@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Koran;
 use App\Models\Product;
 use Carbon\Carbon; // Import Carbon
 
@@ -14,11 +15,30 @@ class HomeController extends Controller
     }
 
     // Home
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return view('home', compact('products'));
+   // Handle search query
+   $search = $request->input('search');
+
+   // Get korans based on search query (regular korans), with pagination (4 per page)
+   $korans = Koran::when($search, function ($query, $search) {
+       return $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%');
+   })->paginate(4); // Pagination for regular korans, set to 4 per page to align with the "Load More" feature
+
+   // Get best seller korans (based on the highest views), limited to top 4
+   $bestkorans = Koran::when($search, function ($query, $search) {
+       return $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%');
+   })->orderBy('views', 'desc') // Sort by views in descending order (best seller)
+     ->take(4) // Limit to top 4 most viewed korans
+     ->get(); // Retrieve top best seller korans
+
+   // Return view with both korans and best seller korans
+   return view('home', compact('korans', 'bestkorans'));
     }
+
+
 
     // Admin Home
     public function adminHome()
@@ -43,5 +63,11 @@ class HomeController extends Controller
         }
 
         return view('dashboard', compact('greeting', 'currentDay', 'currentDateTime'));
+    }
+
+    public function langganan()
+    {
+        $products = Product::all();
+        return view('langganann')->with('products', $products);
     }
 }

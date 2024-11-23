@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\koran;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -12,7 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::orderBy('created_at', 'DESC')->get();
+        $product = koran::all();    
 
         return view('products.index', compact('product'));
     }

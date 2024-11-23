@@ -65,8 +65,11 @@
                 <a href="{{ route('admin/products') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
                     <i class="bi bi-newspaper mr-2"></i>Koran
                 </a>
+                <a href="{{ route('admin/products') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
+                    <i class="bi bi-newspaper mr-2"></i>Langganan
+                </a>
 
-                <a href="{{ route('langganan') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
+                <a href="{{ route('admin/dashboard') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
                     <i class="bi bi-speedometer2 mr-2"></i>Dashboard
                 </a>
 

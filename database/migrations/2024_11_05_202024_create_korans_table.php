@@ -18,6 +18,12 @@ return new class extends Migration
             $table->string('pages');
             $table->string('published');
             $table->string('description');
+            $table->string('image');
+            $table->string('file');
+            $table->string('status');
+            $table->string('price');
+            $table->string('views');
+            $table->string('read');
             $table->timestamps();
         });
     }
