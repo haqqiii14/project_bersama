@@ -9,6 +9,8 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CartController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +24,6 @@ use App\Http\Controllers\DashboardController;
 */
 
 // Route::get('/', [HomeController::class, 'index'])->name('homepage');
-
-
-Route::get('/keranjang', [UserController::class, 'keranjang'])->name('keranjang');
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('register', 'register')->name('register');
@@ -46,6 +45,13 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::post('/profile/update', [UserController::class, 'updateprofile'])->name('profile/update');
     Route::get('/langganan', [HomeController::class, 'langganan'])->name('user.langganan');
     Route::get('/products/{id}', [ProductController::class, 'detail'])->name('cart.detail');
+
+    //keranjang
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add-product', [CartController::class, 'addProduct'])->name('cart.addProduct');
+    Route::post('/cart/add-koran', [CartController::class, 'addKoran'])->name('cart.addKoran');
+    Route::delete('/cart/remove-product', [CartController::class, 'removeProduct'])->name('cart.removeProduct');
+    Route::delete('/cart/remove-koran', [CartController::class, 'removeKoran'])->name('cart.removeKoran');
 });
 
 //Admin Routes List

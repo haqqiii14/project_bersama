@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,       // User harus ada sebelum Cart, Order, dll
             ProductSeeder::class,    // Produk harus ada sebelum CartProduct dan OrderProduct
             KoranSeeder::class,      // Koran juga harus ada jika digunakan dalam Cart atau Order
-            CartSeeder::class,       // Cart memerlukan user dan produk
+            // CartSeeder::class,       // Cart memerlukan user dan produk
             OrderSeeder::class,      // Order membutuhkan Cart
             InvoiceSeeder::class,    // Invoice membutuhkan Order
             PaymentSeeder::class,    // Pembayaran membutuhkan Invoice

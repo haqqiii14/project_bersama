@@ -13,13 +13,17 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->decimal('price', 10, 2);
-            $table->text('description');
-            $table->string('duration');
-            $table->string('image')->nullable(); // Tambahkan kolom untuk gambar
-            $table->timestamps();
+            $table->string('title'); // Nama produk/paket
+            $table->decimal('price', 10, 2); // Harga setelah diskon
+            $table->decimal('original_price', 10, 2)->nullable(); // Harga asli sebelum diskon
+            $table->unsignedTinyInteger('discount_percentage')->nullable(); // Persentase diskon
+            $table->text('description')->nullable(); // Deskripsi produk
+            $table->string('duration'); // Durasi paket (contoh: 1 Bulan, 6 Bulan, dll.)
+            $table->json('features')->nullable(); // Fitur paket (disimpan dalam format JSON)
+            $table->string('image')->nullable(); // Gambar paket
+            $table->timestamps(); // Kolom created_at dan updated_at
         });
+
     }
 
     /**

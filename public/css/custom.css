@@ -1,0 +1,99 @@
+/* General Layout */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Step Progress Navigation */
+.step {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    color: #aaa;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    margin-right: 5px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+.step.active {
+    background: #007bff;
+    color: #fff;
+}
+
+/* Cart Item */
+.cart-item {
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background: #f9f9f9;
+}
+.cart-item h5 {
+    margin: 0;
+    font-size: 1rem;
+}
+.cart-item small {
+    color: #888;
+}
+.cart-item .btn-remove {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #dc3545;
+    cursor: pointer;
+}
+.cart-item .btn-remove:hover {
+    color: #b02a37;
+}
+
+/* Payment Summary */
+.summary {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 4px;
+    background: #f9f9f9;
+}
+.summary h5 {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+.promo {
+    display: flex;
+    margin-bottom: 15px;
+}
+.promo input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+}
+.promo .btn-apply {
+    background: #ffc107;
+    border: none;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+.promo .btn-apply:hover {
+    background: #e0a800;
+}
+.total {
+    font-weight: bold;
+}
+.btn-next {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+.btn-next:hover {
+    background: #0056b3;
+}

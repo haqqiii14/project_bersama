@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 </head>
 
 <body>
@@ -29,7 +29,7 @@
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
                                 <a href="{{ url('/home') }}" class="{{ Request::is('/home') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                                <a href="{{ route('keranjang') }}" class="{{ Request::routeIs('keranjang') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 rounded-md text-sm font-medium">Keranjang</a>
+                                <a href="{{ route('cart.index') }}" class="{{ Request::routeIs('cart.index') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 rounded-md text-sm font-medium">Keranjang</a>
                                 <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Library</a>
                                 <a href="{{ route('user.langganan') }}" class="{{ Request::routeIs('user.langganan') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 rounded-md text-sm font-medium">Langganan</a>
                             </div>
@@ -95,7 +95,7 @@
             <div x-show="mobileMenuOpen" class="md:hidden">
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                     <a href="{{ url('/') }}" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                    <a href="{{ route('keranjang') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Keranjang</a>
+                    <a href="{{ route('cart.index') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Keranjang</a>
                     <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Library</a>
                 </div>
                 <div class="pt-4 pb-3 border-t border-gray-700">

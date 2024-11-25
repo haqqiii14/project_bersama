@@ -35,11 +35,12 @@ class HomeController extends Controller
      ->take(4) // Limit to top 4 most viewed korans
      ->get(); // Retrieve top best seller korans
 
+    //LANGGANAN Section
+    $langganan = Product::all();
+
    // Return view with both korans and best seller korans
-   return view('home', compact('korans', 'bestkorans'));
+   return view('home', compact('korans', 'bestkorans', 'langganan'));
     }
-
-
 
     // Admin Home
     public function adminHome()
