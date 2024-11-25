@@ -29,10 +29,9 @@ Route::get('/keranjang', [UserController::class, 'keranjang'])->name('keranjang'
 Route::controller(AuthController::class)->group(function () {
     Route::get('register', 'register')->name('register');
     Route::post('register', 'registerSave')->name('register.save');
-    Route::get('/', 'home')->name('homepage');
     Route::get('login', 'login')->name('login');
     Route::post('login', 'loginAction')->name('login.action');
-
+    Route::get('/', 'home')->name('homepage');
     Route::get('logout', 'logout')->middleware('auth')->name('logout');
 });
 

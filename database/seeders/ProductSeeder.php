@@ -18,25 +18,25 @@ class ProductSeeder extends Seeder
         Product::create([
             'title' => 'Jawapos',
             'price' => 100.00,
-            'product_code' => 'P001',
             'description' => 'Description for product 1',
             'image' => 'products/default-product.png',
+            'duration' => '1 Bulan',
         ]);
 
         Product::create([
             'title' => 'Product 2',
             'price' => 150.00,
-            'product_code' => 'P002',
             'description' => 'Description for product 2',
             'image' => 'products/default-product.png',
+            'duration' => '2 Bulan',
         ]);
 
         Product::create([
             'title' => 'Product 3',
             'price' => 200.00,
-            'product_code' => 'P003',
             'description' => 'Description for product 3',
             'image' => 'products/default-product.png',
+            'duration' => '3 Bulan',
         ]);
     }
 }

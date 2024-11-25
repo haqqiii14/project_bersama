@@ -15,8 +15,18 @@ class UserAccess
      */
     public function handle($request, Closure $next, $role)
     {
-        if (auth()->user()->type !== $role) {
-            return response()->json(['message' => 'You do not have permission to access this page '.auth()->user()->type], 403);
+        $user = auth()->user();
+
+        if (!$user || $user->type !== $role) {
+            // Redirect to specific routes based on role
+            if ($user->type === 'admin') {
+                return redirect()->route('admin/home')->with('error', 'You are redirected as an admin.');
+            } elseif ($user->type === 'user') {
+                return redirect()->route('home')->with('error', 'You are redirected as a user.');
+            }
+
+            // Default response for unauthorized access
+            return response()->json(['message' => 'You do not have permission to access this page.'.$role], 403);
         }
 
         return $next($request);

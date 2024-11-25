@@ -11,22 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('loans', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('koran_id')->constrained()->onDelete('cascade');
-            $table->date('borrow_date');
-            $table->date('return_date')->nullable();
-            $table->enum('status', ['borrowed', 'returned'])->default('borrowed');
+            $table->string('status')->default('Menunggu Pembayaran');
+            $table->decimal('total', 10, 2); // Add total column with decimal type
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('loans');
+        Schema::dropIfExists('orders');
     }
 };
