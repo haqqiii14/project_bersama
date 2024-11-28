@@ -5,23 +5,16 @@
 @section('contents')
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <!-- Form pencarian -->
-            <form method="GET" action="{{ route('home') }}" class="flex flex-col sm:flex-row gap-2 mb-4">
-                <input type="text" name="search" value="{{ request()->query('search') }}" placeholder="Cari produk..."
-                    class="border p-2 rounded-lg w-full sm:w-1/3" />
-                <button type="submit" class="bg-blue-600 text-white p-2 rounded-lg">
-                    Cari
-                </button>
-            </form>
+            Selamat Datang
         </div>
     </header>
     <hr />
     <main>
         <!-- Carousel Section -->
-        <div id="carousel" class="relative overflow-hidden w-full max-w-7xl mx-auto bg-gray-200 my-6 rounded-lg">
+        <div id="carousel" class="relative overflow-hidden w-full max-w-7xl mx-auto bg-gray-200 my-10 rounded-lg">
             <!-- Images -->
             <div class="carousel-images">
-                <img src="https://placehold.co/800x300" alt="Carousel 1"
+                <img src="https://fs-media.kontan.co.id/kstore/upload/banner/PROMO_PAYDAY_NOVEMBER_2024251124144609.jpg" alt="Carousel 1"
                     class="carousel-image w-full h-[300px] object-cover">
                 <img src="https://fs-media.kontan.co.id/kstore/upload/banner/Double_Premium_Access080524164232.jpg"
                     alt="Carousel 2" class="carousel-image w-full h-[300px] object-cover hidden">
