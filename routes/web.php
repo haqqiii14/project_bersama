@@ -52,6 +52,10 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::post('/cart/add-koran', [CartController::class, 'addKoran'])->name('cart.addKoran');
     Route::delete('/cart/remove-product', [CartController::class, 'removeProduct'])->name('cart.removeProduct');
     Route::delete('/cart/remove-koran', [CartController::class, 'removeKoran'])->name('cart.removeKoran');
+
+    Route::get('/cart/{step}', [CartController::class, 'checkout'])->name('checkout');
+    Route::post('/cart/save-shipping', [CartController::class, 'saveShipping'])->name('checkout.saveShipping');
+    Route::post('/cart/process-payment', [CartController::class, 'processPayment'])->name('checkout.processPayment');
 });
 
 //Admin Routes List
