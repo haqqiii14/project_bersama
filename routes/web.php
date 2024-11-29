@@ -48,6 +48,7 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 
     //keranjang
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/cart/detail/{id}', [ProductController::class, 'detail'])->name('cart.detail');
     Route::post('/cart/add-product', [CartController::class, 'addProduct'])->name('cart.addProduct');
     Route::post('/cart/add-koran', [CartController::class, 'addKoran'])->name('cart.addKoran');
     Route::delete('/cart/remove-product', [CartController::class, 'removeProduct'])->name('cart.removeProduct');
