@@ -18,19 +18,17 @@
 
             <div class="mb-5">
                 <label class="block text-sm font-semibold text-gray-700">Price</label>
-                <select id="price" name="price" required class="block w-full mt-2 px-4 py-2 rounded-md border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 sm:text-sm">
-                    <option value="" disabled selected></option>
-                    <option value="5.00">5.00</option>
-                    <option value="10.00">10.00</option>
-                    <option value="15.00">15.00</option>
-                    <option value="20.00">20.00</option>
-                </select>
+                <input type="number" name="price" id="price" required class="block w-full mt-2 px-4 py-2 rounded-md border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 sm:text-sm">
             </div>
-            
 
             <div class="mb-5">
                 <label class="block text-sm font-semibold text-gray-700">Product Code</label>
                 <input id="product_code" name="product_code" type="text" required class="block w-full mt-2 px-4 py-2 rounded-md border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 sm:text-sm">
+            </div>
+
+            <div class="mb-5">
+                <label class="block text-sm font-semibold text-gray-700">Duration (in days)</label>
+                <input id="duration" name="duration" type="number" min="1" required class="block w-full mt-2 px-4 py-2 rounded-md border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 sm:text-sm" placeholder="Enter duration in days">
             </div>
 
             <div class="mb-5">
