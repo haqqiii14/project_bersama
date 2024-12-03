@@ -13,7 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = koran::all();    
+        $product = Product::all();
 
         return view('products.index', compact('product'));
     }
@@ -31,31 +31,44 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
+        // Validasi input
         $request->validate([
             'title' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'product_code' => 'required|string|max:255|unique:products',
+            'original_price' => 'nullable|numeric',
+            'discount_percentage' => 'nullable|integer|min:0|max:100',
             'description' => 'nullable|string',
+            'duration' => 'required|string|max:50',
+            'features' => 'nullable|array',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-
+        // Proses upload gambar jika ada
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public'); // Menyimpan gambar ke 'storage/app/public/products'
+            $imagePath = $request->file('image')->store('products', 'public'); // Menyimpan gambar di folder 'products' dalam storage
         } else {
             $imagePath = null;
         }
 
+        // Hitung harga asli jika diskon ada
+        $originalPrice = $request->original_price;
+        $price = $request->price;
 
+        if (!$originalPrice && $request->discount_percentage) {
+            $originalPrice = $price / (1 - ($request->discount_percentage / 100));
+        }
+
+        // Simpan data ke database
         Product::create([
             'title' => $request->title,
-            'price' => $request->price,
-            'product_code' => $request->product_code,
+            'price' => $price,
+            'original_price' => $originalPrice,
+            'discount_percentage' => $request->discount_percentage,
             'description' => $request->description,
+            'duration' => $request->duration,
+            'features' => json_encode($request->features), // Simpan fitur dalam format JSON
             'image' => $imagePath,
         ]);
-
 
         return redirect()->route('admin/products')->with('success', 'Product added successfully');
     }
