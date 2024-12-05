@@ -59,7 +59,7 @@
         <aside class="w-64 bg-gray-800 text-gray-200 min-h-screen">
             <div class="p-4 font-bold text-center text-blue-400">Admin Dashboard</div>
             <nav class="mt-5">
-                <a href="{{ route('admin/home') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
+                <a href="{{ route('admin/AdminHome') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
                     <i class="bi bi-house-door mr-2"></i>Home
                 </a>
                 <a href="{{ route('admin/products') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">

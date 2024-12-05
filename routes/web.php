@@ -57,6 +57,8 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/cart/{step}', [CartController::class, 'checkout'])->name('checkout');
     Route::post('/cart/save-shipping', [CartController::class, 'saveShipping'])->name('checkout.saveShipping');
     Route::post('/cart/process-payment', [CartController::class, 'processPayment'])->name('checkout.processPayment');
+    Route::get('/payment/redirect', [PaymentController::class, 'redirectToGateway'])->name('payment.redirect');
+
 });
 
 //Admin Routes List
@@ -71,7 +73,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/langganan', [DashboardController::class, 'index'])->name('langganan');
 
     //admin Home & profile
-    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin/home');
+    Route::get('/admin/AdminHome', [HomeController::class, 'adminHome'])->name('admin/AdminHome');
     Route::get('/admin/profile', [AdminController::class, 'profilepage'])->name('admin/profile');
     Route::post('/admin/profile/update', [AdminController::class, 'updateprofile'])->name('admin/profile/update');
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin/dashboard');

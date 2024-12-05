@@ -79,7 +79,8 @@
                             <span>Total Pembayaran</span>
                             <span>Rp {{ number_format($cart->cartProducts->sum(fn($cartProduct) => $cartProduct->product->price * $cartProduct->quantity) + $cart->cartKorans->sum(fn($cartKoran) => 10000 * $cartKoran->quantity), 0, ',', '.') }}</span>
                         </p>
-                        <a href="#" class="btn-next">Lanjut</a>
+                        <a href="{{ route('payment.redirect', ['amount' => $cart->cartProducts->sum(fn($cartProduct) => $cartProduct->product->price * $cartProduct->quantity) + $cart->cartKorans->sum(fn($cartKoran) => 10000 * $cartKoran->quantity)]) }}" class="btn-next">Lanjut</a>
+
                     </div>
                 </div>
             </div>
