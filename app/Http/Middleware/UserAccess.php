@@ -20,7 +20,7 @@ class UserAccess
         if (!$user || $user->type !== $role) {
             // Redirect to specific routes based on role
             if ($user->type === 'admin') {
-                return redirect()->route('admin/home')->with('error', 'You are redirected as an admin.');
+                return redirect()->route('admin/AdminHome')->with('error', 'You are redirected as an admin.');
             } elseif ($user->type === 'user') {
                 return redirect()->route('home')->with('error', 'You are redirected as a user.');
             }

@@ -87,7 +87,7 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         if (auth()->user()->type == 'admin') {
-            return redirect()->route('admin/home');
+            return redirect()->route('admin/AdminHome');
         } else {
             return redirect()->route('home');
         }
