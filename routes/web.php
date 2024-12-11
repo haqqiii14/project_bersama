@@ -57,8 +57,6 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/cart/{step}', [CartController::class, 'checkout'])->name('checkout');
     Route::post('/cart/save-shipping', [CartController::class, 'saveShipping'])->name('checkout.saveShipping');
     Route::post('/cart/process-payment', [CartController::class, 'processPayment'])->name('checkout.processPayment');
-    Route::get('/payment/redirect', [PaymentController::class, 'redirectToGateway'])->name('payment.redirect');
-
 });
 
 //Admin Routes List
