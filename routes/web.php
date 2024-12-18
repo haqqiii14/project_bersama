@@ -10,6 +10,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SearchController;
 
 
 /*
@@ -24,6 +26,8 @@ use App\Http\Controllers\CartController;
 */
 
 // Route::get('/', [HomeController::class, 'index'])->name('homepage');
+Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::get('/koran/{id}', [ProductController::class, 'detail'])->name('koran.detail');
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('register', 'register')->name('register');
@@ -44,8 +48,6 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/profile', [UserController::class, 'userprofile'])->name('profile');
     Route::post('/profile/update', [UserController::class, 'updateprofile'])->name('profile/update');
     Route::get('/langganan', [HomeController::class, 'langganan'])->name('user.langganan');
-    Route::get('/products/{id}', [ProductController::class, 'detail'])->name('cart.detail');
-
     //keranjang
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::get('/cart/detail/{id}', [ProductController::class, 'detail'])->name('cart.detail');

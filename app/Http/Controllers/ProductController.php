@@ -122,9 +122,9 @@ class ProductController extends Controller
     public function detail($id)
     {
         // Ambil produk berdasarkan ID
-        $product = Product::findOrFail($id);
+        $korans = Koran::findOrFail($id);
 
         // Kembalikan view dengan data produk
-        return view('cart.detail', compact('product'));
+        return view('cart.detail', compact('korans'));
     }
 }

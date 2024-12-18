@@ -1,0 +1,246 @@
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Header Bands */
+.color-band-top, .color-band-bottom {
+    background-color: #f9f9f9; /* Light gray */
+    color: black; /* Black text color */
+    padding: 10px 20px;
+    text-align: center;
+}
+
+/* Logo Styling */
+.logo {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.logo img {
+    height: 60px; /* Logo size */
+}
+
+/* Custom Color Section */
+.custom-color {
+    background-color: #00a39b; /* Turquoise Color */
+    color: white;
+}
+
+.hover-custom:hover {
+    background-color: #00a39b; /* Turquoise hover */
+}
+
+/* Buttons Styling */
+.btn {
+    padding: 8px 16px;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn+.btn {
+    margin-left: 8px; /* Space between buttons */
+}
+
+.btn:hover {
+    background-color: #ff8400; /* Hover color */
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* Outline Button */
+.button-outline {
+    font-size: 16px;
+    color: #00a39b; /* Teal color for the text */
+    background-color: transparent;
+    border: 2px solid #00a39b;
+    padding: 10px 20px;
+    border-radius: 20px; /* Pill shape */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button-outline:disabled {
+    color: #b2dfdb; /* Lighter teal color */
+    border-color: #b2dfdb;
+    cursor: not-allowed;
+    background-color: transparent;
+}
+
+.button-outline:hover:disabled {
+    background-color: transparent;
+    color: #b2dfdb;
+}
+
+/* Social Profile */
+.social-profile {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.social-share-two {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-share-two li {
+    display: inline-block;
+    margin: 0 10px; /* Space between icons */
+}
+
+.social-share-two li a {
+    color: #00a39b; /* Teal color */
+    font-size: 28px; /* Icon size */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-share-two li a:hover {
+    color: #00796b; /* Darker teal color on hover */
+    transform: scale(1.2); /* Slight zoom effect */
+}
+
+/* Navigation Social */
+.nav-social {
+    text-align: center;
+    padding-top: 2%;
+}
+
+.nav-social ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-social li {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.nav-social li:not(:last-child) {
+    margin-right: 10px;
+}
+
+.nav-social li a {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav-social li img {
+    vertical-align: middle;
+    max-width: 100px;
+}
+
+/* Promo Button */
+.button-promo-all {
+    background-color: #0a0a0a;
+    color: #fdfdfd;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    border-radius: 3px;
+}
+
+.button-promo-all:hover {
+    background-color: #333; /* Slightly lighter black */
+}
+
+/* Search Bar */
+.search-bar {
+    position: relative;
+}
+
+.search-bar input[type="text"] {
+    width: 100%;
+    padding: 8px 35px 8px 10px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.search-bar ion-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #666;
+    pointer-events: none;
+}
+.flex.space-x-4 ion-icon {
+    font-size: 32px; /* Ukuran ikon lebih besar */
+    color: #ffffff; /* Warna ikon (sesuai desain) */
+    transition: transform 0.3s ease; /* Efek animasi hover */
+}
+
+.flex.space-x-4 ion-icon:hover {
+    transform: scale(1.2); /* Sedikit perbesar saat hover */
+    color: #ff8400; /* Warna saat hover */
+}
+/* Search bar styling */
+.search-bar {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+.search-bar input[type="text"] {
+    width: 100%;
+    padding: 10px 35px 10px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-bar ion-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 20px;
+}
+
+/* Suggestions Box */
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.suggestions div {
+    padding: 10px;
+    cursor: pointer;
+    color: #333;
+    transition: background-color 0.2s;
+}
+
+.suggestions div:hover {
+    background-color: #f1f1f1;
+    color: #00a39b;
+}
+
