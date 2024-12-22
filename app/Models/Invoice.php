@@ -9,13 +9,45 @@ class Invoice extends Model
 {
     use HasFactory;
 
-    public function order()
+    protected $fillable = [
+        'invoice_id',
+        'user_id',
+        'subscription_id',
+        'amount',
+        'status',
+        'due_date',
+        'cart_items',
+    ];
+
+    /**
+     * Get the user associated with the invoice.
+     */
+    public function user()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function payments()
+    /**
+     * Get the subscription associated with the invoice.
+     */
+    public function subscription()
     {
-        return $this->hasMany(Payment::class);
+        return $this->belongsTo(Subscription::class);
+    }
+
+    /**
+     * Decode the cart items JSON field.
+     */
+    public function getCartItemsAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    /**
+     * Encode the cart items JSON field before saving.
+     */
+    public function setCartItemsAttribute($value)
+    {
+        $this->attributes['cart_items'] = json_encode($value);
     }
 }

@@ -18,29 +18,18 @@ class HomeController extends Controller
     // Home
     public function index(Request $request)
     {
-   // Handle search query
-   $search = $request->input('search');
+        $search = $request->input('search');
 
-   // Get korans based on search query (regular korans), with pagination (4 per page)
-   $korans = Koran::when($search, function ($query, $search) {
-       return $query->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%');
-   })->paginate(4); // Pagination for regular korans, set to 4 per page to align with the "Load More" feature
+        $korans = Koran::when($search, function ($query, $search) {
+            return $query->where('title', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%');
+        })->paginate(4);
 
-   // Get best seller korans (based on the highest views), limited to top 4
-   $bestkorans = Koran::when($search, function ($query, $search) {
-       return $query->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%');
-   })->orderBy('views', 'desc') // Sort by views in descending order (best seller)
-     ->take(4) // Limit to top 4 most viewed korans
-     ->get(); // Retrieve top best seller korans
+        $langganan = Product::all();
 
-    //LANGGANAN Section
-    $langganan = Product::all();
-
-   // Return view with both korans and best seller korans
-   return view('home', compact('korans', 'bestkorans', 'langganan'));
+        return view('home', compact('korans', 'langganan'));
     }
+
 
     // Admin Home
     public function adminHome()

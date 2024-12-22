@@ -121,10 +121,34 @@ class ProductController extends Controller
 
     public function detail($id)
     {
-        // Ambil produk berdasarkan ID
-        $korans = Koran::findOrFail($id);
+        $product = Product::with('korans')->find($id);
 
-        // Kembalikan view dengan data produk
-        return view('cart.detail', compact('korans'));
+        if (!$product) {
+            return redirect()->route('home')->with('error', 'Product not found.');
+        }
+
+        // If you decide to paginate korans within a product
+        $korans = $product->korans()->paginate(10); // Adjust pagination as necessary
+
+        return view('newspaper', compact('product', 'korans')); // Pass both product and korans if paginated
+    }
+
+    public function detailKoran($productId, $koranId)
+    {
+        // Optionally, validate that the product exists
+        $product = Product::find($productId);
+        if (!$product) {
+            return redirect()->route('home')->with('error', 'Product not found.');
+        }
+
+        // Find the koran associated with this product
+        $koran = $product->korans()->where('id', $koranId)->first();
+
+        if (!$koran) {
+            return redirect()->route('home')->with('error', 'Koran not found.');
+        }
+
+        // Return the view with the koran details
+        return view('cart.detail', compact('koran', 'product'));
     }
 }

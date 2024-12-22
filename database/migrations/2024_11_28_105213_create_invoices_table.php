@@ -11,22 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_id')->unique();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_price_id')->constrained('product_prices')->onDelete('cascade');  // Link to product_prices table
-            $table->string('status'); // Example: pending, completed, cancelled
+            $table->foreignId('subscription_id')->constrained()->onDelete('cascade');
+            $table->decimal('amount', 10, 2);
+            $table->string('status')->default('unpaid'); // e.g., unpaid, paid, cancelled
+            $table->date('due_date');
+            $table->json('cart_items'); // Store cart items as JSON
             $table->timestamps();
         });
-
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('invoices');
     }
 };

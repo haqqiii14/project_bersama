@@ -60,19 +60,20 @@
             <div class="p-4 font-bold text-center text-blue-400">Admin Dashboard</div>
             <nav class="mt-5">
                 <a href="{{ route('admin/AdminHome') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
-                    <i class="bi bi-house-door mr-2"></i>Home
+                    <i class="bi bi-speedometer2 mr-2"></i>Dashboard
                 </a>
-                <a href="{{ route('admin/products') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
+                <a href="{{ route('admin.koran') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
                     <i class="bi bi-newspaper mr-2"></i>Koran
                 </a>
                 <a href="{{ route('admin/products') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
                     <i class="bi bi-bell-fill mr-2"></i>Langganan
                 </a>
-
-                <a href="{{ route('admin/dashboard') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
-                    <i class="bi bi-speedometer2 mr-2"></i>Dashboard
+                <a href="" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
+                    <i class="bi bi-bell-fill mr-2"></i>Pembayaran Langganan 
                 </a>
-
+                <a href="" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
+                    <i class="bi bi-bell-fill mr-2"></i>History Transaksi
+                </a>
                 <a href="{{ route('admin/profile') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
                     <i class="bi bi-person-circle mr-2"></i>Profile
                 </a>

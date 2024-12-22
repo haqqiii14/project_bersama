@@ -87,39 +87,35 @@
         </button>
     </div>
     <!-- Bootstrap 5 Grid for Koran List -->
-    <div class="container mt-5">
-        <div class="row g-4">
-            @forelse ($langganan as $koran)
-                <!-- Single Koran Item -->
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                    <a href="{{ route('koran.detail', $koran->id) }}" class="text-decoration-none text-dark">
-                        <div class="card h-100 shadow-sm border-0">
-                            <!-- Image -->
-                            <img src="{{ $koran->image ?? 'https://newepaper.jawapos.co.id/images/thumb_edition/c35fd3vBxYrzye/thumb-0.png' }}"
-                                alt="{{ $koran->title }}" class="card-img-top" style="height: 200px; object-fit: cover;">
-                            <!-- Card Body -->
-                            <div class="card-body text-center">
-                                <h5 class="card-title mb-1 text-truncate">{{ $koran->title }}</h5>
-                                <small class="text-muted">
-                                    {{ \Carbon\Carbon::parse($koran->created_at)->format('d F Y') }}
-                                </small>
-                            </div>
+
+ <!-- Detailed View for a Product's Korans -->
+ <div class="container mt-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('homepage') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('newspaper') }}">Newspaper</a></li> <!-- Adjust based on actual route -->
+            <li class="breadcrumb-item active" aria-current="page">{{ $product->title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        @forelse ($product->korans as $koran) <!-- Corrected loop -->
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <a href="{{ route('detailKoran', ['productId' => $product->id, 'koranId' => $koran->id]) }}" class="text-decoration-none text-dark">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="{{ $koran->image ?? 'default/path' }}" alt="{{ $koran->title }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title mb-1 text-truncate">{{ $koran->title }}</h5>
+                            <small class="text-muted">{{ \Carbon\Carbon::parse($koran->published)->format('d F Y') }}</small>
                         </div>
-                    </a>
-                </div>
-            @empty
-                <!-- No Results Found -->
-                <div class="col-12 text-center">
-                    <p class="text-muted">No korans found.</p>
-                </div>
-            @endforelse
-
-        </div>
-
-        <!-- Pagination Controls -->
-        <div class="mt-4 d-flex justify-content-center">
-            {{ $korans->links('pagination::bootstrap-5') }}
-        </div>
+                    </div>
+                </a>
+            </div>
+        @empty
+            <div class="col-12 text-center">
+                <p class="text-muted">No korans found.</p>
+            </div>
+        @endforelse
     </div>
-
+</div>
 @endsection

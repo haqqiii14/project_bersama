@@ -31,15 +31,9 @@ class AuthController extends Controller
         })->paginate(10); // Pagination for regular korans, set to 4 per page to align with the "Load More" feature
 
         // Get best seller korans (based on the highest views), limited to top 4
-        $bestkorans = Koran::when($search, function ($query, $search) {
-            return $query->where('title', 'like', '%' . $search . '%')
-                         ->orWhere('description', 'like', '%' . $search . '%');
-        })->orderBy('views', 'desc') // Sort by views in descending order (best seller)
-          ->take(4) // Limit to top 4 most viewed korans
-          ->get(); // Retrieve top best seller korans
 
         // Return view with both korans and best seller korans
-        return view('home', compact('korans', 'bestkorans'));
+        return view('home', compact('korans'));
     }
 
 

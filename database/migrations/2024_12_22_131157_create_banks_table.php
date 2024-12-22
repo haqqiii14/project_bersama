@@ -11,21 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('banks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('status')->default('Menunggu Pembayaran');
-            $table->decimal('total', 10, 2); // Add total column with decimal type
+            $table->string('name'); // Bank name
+            $table->string('account_number'); // Bank account number
+            $table->string('account_holder'); // Account holder name
+            $table->string('image'); // Bank logo image URL
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('banks');
     }
 };

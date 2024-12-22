@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\koran;
+use App\Models\Invoice;
+use App\Models\Product;
 use Carbon\Carbon; // Import Carbon
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -98,22 +101,21 @@ class AdminController extends Controller
         }
     
         // Get statistics for koran
-        $totalViews = Koran::sum('views'); // Total views from all korans
         $totalReads = Koran::sum('read'); // Total reads from all korans
-        $totalSales = Koran::sum(DB::raw('price * `read`')); // Total sales calculated as price times total reads from all korans
+        $totalSales = Invoice::sum('amount');
         
         // Format total sales in rupiah and convert to words
         $formattedTotalSales = 'Rp ' . number_format($totalSales, 0, ',', '.') . ' (' . $this->numberToWords($totalSales) . ')';
     
         // Prepare data for the chart
         $chartLabels = Koran::pluck('title'); // Get titles of korans for chart labels
-        $chartData = Koran::pluck(DB::raw('price * `read`')); // Get total sales for each koran
+        $chartData = Invoice::pluck('amount'); // Get prices of subscriptions for chart data
     
         // Get koran data including status, price, views, reads
         $korans = Koran::all(); // Get all koran records
     
         // Return view with all data
-        return view('dashboard', compact('greeting', 'currentDay', 'currentDateTime', 'totalViews', 'totalReads', 'totalSales', 'formattedTotalSales', 'chartLabels', 'chartData', 'korans'));
+        return view('dashboard', compact('greeting', 'currentDay', 'currentDateTime', 'totalReads', 'totalSales', 'formattedTotalSales', 'chartLabels', 'chartData', 'korans'));
     }
     
     // Helper function to convert number to words in Indonesian
@@ -138,5 +140,96 @@ class AdminController extends Controller
             return $this->numberToWords(intval($number / 1000000)) . ' juta' . (($number % 1000000 != 0) ? ' ' . $this->numberToWords($number % 1000000) : '');
         }
     }
+
+    public function adminkoran ()
+    {
+        $korans = Koran::all();
+        return view('admin.koran', compact('korans'));
+    }
+    // Show the form for creating a new koran issue
+    public function createKoran()
+    {
+        $products = Product::all();
+        return view('admin.korans.create', compact('products'));
+    }
+
+    // Store a newly created koran issue in the database
+    public function storeKoran(Request $request)
+    {
+        // Validate incoming request data
+        $validatedData = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'title' => 'required|string|max:255',
+            'edisi' => 'required|string|max:255',
+            'pages' => 'required|integer',
+            'description' => 'nullable|string',
+        ]);
+        
+        // Automatic assignment of published and status fields
+        $validatedData['published'] = Carbon::now();
+        $validatedData['status'] = 'active'; // Set status as active on creation
     
+        // Handle file uploads for image
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = $request->file('image')->store('images', 'public');
+        }
+    
+        // Handle file uploads for PDF file
+        if ($request->hasFile('file')) {
+            $validatedData['file'] = $request->file('file')->store('files', 'public');
+        }
+    
+        // Set 'read' to 0 for a new entry
+        $validatedData['read'] = 0;
+    
+        // Create a new Koran record with the validated data
+        Koran::create($validatedData);
+    
+        // Redirect to the Koran index page with a success message
+        return redirect()->route('admin.koran')->with('success', 'Koran berhasil ditambahkan!');
+    }
+    
+    
+
+    // Display the specified koran issue
+    public function showKoran($id)
+    {
+        $koran = Koran::findOrFail($id);
+        return view('admin.korans.show', compact('koran'));
+    }
+
+    // Show the form for editing the specified koran issue
+    public function editKoran($id)
+    {
+        $koran = Koran::findOrFail($id);
+        return view('admin.korans.edit', compact('koran'));
+    }
+
+    // Update the specified koran issue in the database
+    public function updateKoran(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'edisi' => 'required|string|max:255',
+            'pages' => 'required|integer',
+            'published' => 'required|boolean',
+            'description' => 'nullable|string',
+            'status' => 'required|string',
+            'price' => 'required|numeric',
+            'views' => 'required|integer',
+            'read' => 'required|integer'
+        ]);
+
+        $koran = Koran::findOrFail($id);
+        $koran->update($validatedData);
+        return redirect()->route('admin.koran')->with('success', 'Koran Berhasil diupdate!');
+    }
+
+    // Remove the specified koran issue from the database
+    public function destroyKoran($id)
+    {
+        $koran = Koran::findOrFail($id);
+        $koran->delete();
+        return redirect()->route('admin.koran')->with('success', 'Koran Berhasil dihapus!');
+    }
 }

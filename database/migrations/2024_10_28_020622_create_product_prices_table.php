@@ -11,23 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('product_prices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->string('invoice_number'); // Add the invoice_number column
-            $table->decimal('amount', 10, 2);
-            $table->string('status')->default('unpaid');
-            $table->date('due_date');
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->decimal('price', 10, 2); // Price for the package
+            $table->decimal('duration', 8, 2); // Duration in days, allowing fractional days
             $table->timestamps();
         });
-    }
 
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('product_prices');
     }
 };

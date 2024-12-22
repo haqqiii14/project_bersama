@@ -13,17 +13,16 @@ return new class extends Migration
     {
         Schema::create('korans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');  // Link to products table
             $table->string('title');
             $table->string('edisi');
-            $table->string('pages');
-            $table->string('published');
-            $table->string('description');
+            $table->integer('pages');  // Assuming 'pages' should be an integer
+            $table->date('published');  // Assuming 'published' should be a date
+            $table->text('description');  // Changed to text for longer descriptions
             $table->string('image');
             $table->string('file');
             $table->string('status');
-            $table->string('price');
-            $table->string('views');
-            $table->string('read');
+            $table->integer('read')->default(0);  // Assuming read should be an integer
             $table->timestamps();
         });
     }

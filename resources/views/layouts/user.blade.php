@@ -21,20 +21,24 @@
     <div class="md:hidden custom-color text-white py-4 px-4 sticky top-0 z-10">
         <div class="flex justify-between items-center">
             <!-- Logo -->
-            <a href="{{ url('/') }}" class="flex items-center">
-                <img src="https://bangsaonline.com/img/logo.png?rand=140" alt="Jawa Pos Logo" class="h-8 w-auto">
+            <a href="{{ route('homepage') }}" class="flex items-center">
+                <img src="https://bangsaonline.com/img/logo.png?rand=140" alt="BangsaOnline Logo" class="h-8 w-auto">
             </a>
-            <div class="mt-2">
+            <div class="mt-2 flex items-center space-x-2">
                 <input type="text" placeholder="Search..." class="w-full p-2 rounded text-gray-700">
+                <a href="#" class="text-gray-700 block">
+                    <i class="fas fa-search"></i> <!-- Font Awesome Search Icon -->
+                </a>
             </div>
+
         </div>
     </div>
 
     <!-- Desktop Header -->
-    <div class="color-band-top max-w-screen-xl mx-auto flex justify-between items-center py-4 px-6">
-        <div class="logo">
+    <div class="desktop-header color-band-top max-w-screen-xl mx-auto flex justify-between items-center py-4 px-6">
+        <div href="{{ route('homepage') }}" class="logo">
             <a href="#">
-                <img src="https://bangsaonline.com/img/logo.png?rand=140" alt="BangsaOnline Logo">
+                <img href="{{ route('homepage') }}" src="https://bangsaonline.com/img/logo.png?rand=140" alt="BangsaOnline Logo">
             </a>
         </div>
         <button type="button" class="button-outline">
@@ -68,19 +72,14 @@
         <div class="max-w-screen-xl mx-auto flex justify-between items-center py-4 px-6">
             <!-- Search Bar -->
             <div class="relative search-bar">
-                <input
-                    type="text"
-                    id="search-input"
-                    placeholder="Search..."
-                    onkeyup="fetchSuggestions()"
-                >
+                <input type="text" id="search-input" placeholder="Search..." onkeyup="fetchSuggestions()">
                 <ion-icon name="search-outline"></ion-icon>
                 <div id="suggestions-box" class="suggestions"></div>
             </div>
 
             <!-- Navigation Links -->
             <div class="flex space-x-4">
-                <a href="#" class="hover:underline">
+                <a href="{{ route('homepage') }}" class="hover:underline">
                     <ion-icon name="home-sharp"></ion-icon>
                 </a>
                 <a href="#" class="hover:underline">
@@ -89,8 +88,25 @@
                 <a href="{{ route('cart.index') }}" class="hover:underline">
                     <ion-icon name="cart-sharp"></ion-icon>
                 </a>
-                <a href="{{ route('login') }}" class="btn">Login</a>
-                <a href="{{ route('register') }}" class="btn">Register</a>
+                @if (Auth::check())
+                    <!-- User is logged in -->
+                    <a href="#" class="hover:underline text-white">
+                        <ion-icon name="person-sharp" style="color: white;"></ion-icon>
+                        {{ Auth::user()->name }}
+                    </a>
+                    <a href="{{ route('logout') }}" class="hover:underline text-white"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                @else
+                    <!-- User is not logged in -->
+                    <a href="{{ route('login') }}" class="btn text-white">Login</a>
+                    <a href="{{ route('register') }}" class="btn text-white">Register</a>
+                @endif
+
             </div>
         </div>
     </div>
@@ -121,124 +137,129 @@
                 </a>
             </div>
         </div>
-        
-        
 
-<footer class="bg-white dark:bg-gray-900">
-    <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-        <div class="md:flex md:justify-between">
-          <div class="mb-6 md:mb-0">
-              <a href="https://flowbite.com/" class="flex items-center">
-                  <img src="https://bangsaonline.com/img/logo.png?rand=140" class="h-15 me-3" alt="FlowBite Logo" />
-                    <ul class="social-share-two">
-                        <li><a target="_blank" href="https://www.facebook.com/bangsaonline">
-                                <ion-icon name="logo-facebook"></ion-icon>
-                            </a></li>
-                        <li><a target="_blank" href="https://www.tiktok.com/@bangsaonline">
-                                <ion-icon name="logo-tiktok"></ion-icon>
-                            </a></li>
-                        <li><a target="_blank" href="https://twitter.com/bangsaonline">
-                                <ion-icon name="logo-twitter"></ion-icon>
-                            </a></li>
-                        <li><a target="_blank" href="https://instagram.com/bangsaonline">
-                                <ion-icon name="logo-instagram"></ion-icon>
-                            </a></li>
-                        <li><a target="_blank" href="https://bangsaonline.com/feed/">
-                                <ion-icon name="logo-rss"></ion-icon>
-                            </a></li>
-                        <li><a target="_blank" href="https://bangsaonline.com/live">
-                                <ion-icon name="tv-outline"></ion-icon>
-                            </a></li>
-                    </ul>
-              </a>
-          </div>
-          <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-              <div>
-                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
-                  <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                      <li class="mb-4">
-                          <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
-                      </li>
-                      <li>
-                          <a href="https://tailwindcss.com/" class="hover:underline">Tailwind CSS</a>
-                      </li>
-                  </ul>
-              </div>
-              <div>
-                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Kontak Kami</h2>
-                  <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                      <li class="mb-4">
-                          <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Github</a>
-                      </li>
-                      <li>
-                          <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Discord</a>
-                      </li>
-                  </ul>
-              </div>
-              <div>
-                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
-                  <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                      <li class="mb-4">
-                          <a href="#" class="hover:underline">Privacy Policy</a>
-                      </li>
-                      <li>
-                          <a href="#" class="hover:underline">Terms &amp; Conditions</a>
-                      </li>
-                  </ul>
-              </div>
-          </div>
-      </div>
-      <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-      <div class="sm:flex sm:items-center sm:justify-between">
-          <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://bangsaonline.com/" class="hover:underline">BangsaOnline</a>. All Rights Reserved.
-          </span>
-      </div>
-    </div>
-</footer>
+        {{-- <footer class="md:hidden mt-0 bg-white dark:bg-gray-900">
+
+        </footer> --}}
+        <footer class="bg-white dark:bg-gray-900 desktop-header">
+            <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+                <div class="md:flex md:justify-between">
+                    <div class="mb-6 md:mb-0">
+                        <a href="https://flowbite.com/" class="flex items-center">
+                            <img src="https://bangsaonline.com/img/logo.png?rand=140" class="h-15 me-3"
+                                alt="FlowBite Logo" />
+                            <ul class="social-share-two">
+                                <li><a target="_blank" href="https://www.facebook.com/bangsaonline">
+                                        <ion-icon name="logo-facebook"></ion-icon>
+                                    </a></li>
+                                <li><a target="_blank" href="https://www.tiktok.com/@bangsaonline">
+                                        <ion-icon name="logo-tiktok"></ion-icon>
+                                    </a></li>
+                                <li><a target="_blank" href="https://twitter.com/bangsaonline">
+                                        <ion-icon name="logo-twitter"></ion-icon>
+                                    </a></li>
+                                <li><a target="_blank" href="https://instagram.com/bangsaonline">
+                                        <ion-icon name="logo-instagram"></ion-icon>
+                                    </a></li>
+                                <li><a target="_blank" href="https://bangsaonline.com/feed/">
+                                        <ion-icon name="logo-rss"></ion-icon>
+                                    </a></li>
+                                <li><a target="_blank" href="https://bangsaonline.com/live">
+                                        <ion-icon name="tv-outline"></ion-icon>
+                                    </a></li>
+                            </ul>
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+                        <div>
+                            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources
+                            </h2>
+                            <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                                <li class="mb-4">
+                                    <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
+                                </li>
+                                <li>
+                                    <a href="https://tailwindcss.com/" class="hover:underline">Tailwind CSS</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Kontak Kami
+                            </h2>
+                            <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                                <li class="mb-4">
+                                    <a href="https://github.com/themesberg/flowbite"
+                                        class="hover:underline ">Github</a>
+                                </li>
+                                <li>
+                                    <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Discord</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
+                            <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                                <li class="mb-4">
+                                    <a href="#" class="hover:underline">Privacy Policy</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+                <div class="sm:flex sm:items-center sm:justify-between">
+                    <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a
+                            href="https://bangsaonline.com/" class="hover:underline">BangsaOnline</a>. All Rights
+                        Reserved.
+                    </span>
+                </div>
+            </div>
+        </footer>
 
 
 </body>
-
-
 <!-- Swiper Script -->
 <script>
-function fetchSuggestions() {
-    const input = document.getElementById('search-input').value;
-    const suggestionsBox = document.getElementById('suggestions-box');
+    function fetchSuggestions() {
+        const input = document.getElementById('search-input').value;
+        const suggestionsBox = document.getElementById('suggestions-box');
 
-    if (input.trim() === "") {
-        suggestionsBox.style.display = "none";
-        return;
+        if (input.trim() === "") {
+            suggestionsBox.style.display = "none";
+            return;
+        }
+
+        fetch(`/search?query=${input}`)
+            .then(response => response.json())
+            .then(data => {
+                suggestionsBox.innerHTML = "";
+
+                if (data.length > 0) {
+                    data.forEach(item => {
+                        const div = document.createElement("div");
+                        div.textContent = item.title;
+
+                        // Tambahkan event redirect ke URL produk detail
+                        div.onclick = () => {
+                            window.location.href = item.url; // Arahkan ke halaman detail
+                        };
+
+                        suggestionsBox.appendChild(div);
+                    });
+                    suggestionsBox.style.display = "block";
+                } else {
+                    suggestionsBox.style.display = "none";
+                }
+            })
+            .catch(error => console.error('Error:', error));
     }
-
-    fetch(`/search?query=${input}`)
-        .then(response => response.json())
-        .then(data => {
-            suggestionsBox.innerHTML = "";
-
-            if (data.length > 0) {
-                data.forEach(item => {
-                    const div = document.createElement("div");
-                    div.textContent = item.title;
-
-                    // Tambahkan event redirect ke URL produk detail
-                    div.onclick = () => {
-                        window.location.href = item.url; // Arahkan ke halaman detail
-                    };
-
-                    suggestionsBox.appendChild(div);
-                });
-                suggestionsBox.style.display = "block";
-            } else {
-                suggestionsBox.style.display = "none";
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
-
 </script>
 <script src="https://unpkg.com/swiper@9/swiper-bundle.min.js"></script>
 <script>
+
     document.addEventListener('DOMContentLoaded', function() {
         var swiper = new Swiper('.swiper-container', {
             loop: true,

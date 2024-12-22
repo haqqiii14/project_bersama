@@ -5,12 +5,14 @@
 @section('contents')
 
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div>
+        <h1 class="font-bold text-2xl ml-3">{{ $greeting }}, Admin!</h1> <!-- Display greeting -->
+        <h2 class="text-gray-700 ml-3">Hari ini: {{ $currentDay }}</h2> <!-- Display current day -->
+        <h2 class="text-gray-700 ml-3">Tanggal: {{ $currentDateTime->format('d M Y, H:i') }}</h2> <!-- Display current date and time -->
+        <hr />
+    </div>
     <!-- Statistic Summary Section -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <h3 class="text-lg font-bold">Total Views</h3>
-            <p class="text-3xl font-semibold text-blue-600">{{ $totalViews }}</p>
-        </div>
         <div class="bg-white p-6 rounded-lg shadow-md">
             <h3 class="text-lg font-bold">Total Reads</h3>
             <p class="text-3xl font-semibold text-green-600">{{ $totalReads }}</p>

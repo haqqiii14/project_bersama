@@ -16,13 +16,13 @@ class Product extends Model
         return $this->belongsToMany(Cart::class)->withPivot('quantity');
     }
 
-    public function cartProducts()
+    public function prices()
     {
-        return $this->hasMany(CartProduct::class);
+        return $this->hasMany(ProductPrice::class);
     }
 
-    public function orderProducts()
+    public function korans()
     {
-        return $this->hasMany(OrderProduct::class);
+        return $this->hasMany(Koran::class);
     }
 }

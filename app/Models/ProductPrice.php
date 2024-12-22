@@ -5,18 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Koran extends Model
+class ProductPrice extends Model
 {
-    use HasFactory;
+    protected $fillable = ['product_id', 'price', 'duration'];
 
-    protected $guarded = [];
-
-
-    /**
-     * Get the product that owns the Koran.
-     */
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
 }
+

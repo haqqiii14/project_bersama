@@ -243,4 +243,29 @@ body, html {
     background-color: #f1f1f1;
     color: #00a39b;
 }
+/* Hide the desktop header on mobile screens */
+@media (max-width: 767px) {
+    .desktop-header {
+        display: none;
+    }
+}
+
+/* Ensure the desktop header is displayed on larger screens */
+@media (min-width: 768px) {
+    .desktop-header {
+        display: flex;
+    }
+}
+.search-input {
+    width: 100%;
+    padding: 8px 12px;
+    padding-right: 40px; /* space for icon */
+    border-radius: 4px;
+    font-size: 16px;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>');
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    color: #4B5563; /* Tailwind's gray-700 */
+}
 
