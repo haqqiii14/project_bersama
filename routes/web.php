@@ -29,14 +29,18 @@ use App\Http\Controllers\SearchController;
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::get('/newspaper/{id}', [ProductController::class, 'detail'])->name('koran.detail');
 Route::get('/newspaper/{productId}/{koranId}', [ProductController::class, 'detailKoran'])->name('detailKoran');
+
+
 Route::controller(AuthController::class)->group(function () {
-    Route::get('register', 'register')->name('register');
-    Route::post('register', 'registerSave')->name('register.save');
-    Route::get('login', 'login')->name('login');
-    Route::post('login', 'loginAction')->name('login.action');
+    Route::middleware(['guest'])->group(function () {
+        Route::get('register', 'register')->name('register');
+        Route::post('register', 'registerSave')->name('register.save');
+        Route::get('login', 'login')->name('login');
+        Route::post('login', 'loginAction')->name('login.action');
+    });
     Route::get('/', 'home')->name('homepage');
     Route::get('/newspaper', 'home')->name('newspaper');
-    Route::get('logout', 'logout')->middleware('auth')->name('logout');
+    Route::post('logout', 'logout')->middleware('auth')->name('logout');
 });
 
 //Notifikasi Admin
@@ -89,7 +93,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
         Route::put('korans/{koran}', [AdminController::class, 'updateKoran'])->name('admin.korans.update');
         Route::delete('korans/{koran}', [AdminController::class, 'destroyKoran'])->name('admin.korans.destroy');
     });
-    
+
 
     //admin products
     Route::get('/admin/products', [ProductController::class, 'index'])->name('admin/products');

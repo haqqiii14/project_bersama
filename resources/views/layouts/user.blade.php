@@ -94,13 +94,14 @@
                         <ion-icon name="person-sharp" style="color: white;"></ion-icon>
                         {{ Auth::user()->name }}
                     </a>
-                    <a href="{{ route('logout') }}" class="hover:underline text-white"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Logout
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+
+                    <form action="{{ route('logout') }}" method="POST">
                         @csrf
+                        <!-- Token CSRF untuk keamanan -->
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <button type="submit">Keluar</button>
                     </form>
+                    
                 @else
                     <!-- User is not logged in -->
                     <a href="{{ route('login') }}" class="btn text-white">Login</a>
