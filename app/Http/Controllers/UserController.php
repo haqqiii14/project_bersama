@@ -13,6 +13,7 @@ class UserController extends Controller
 {
     public function userprofile()
     {
+
         return view('userprofile');
     }
 

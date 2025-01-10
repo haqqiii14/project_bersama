@@ -72,11 +72,11 @@
         <div class="max-w-screen-xl mx-auto flex justify-between items-center py-4 px-6">
             <!-- Search Bar -->
             <div class="relative search-bar">
-                <input 
-                    type="text" 
-                    id="search-input" 
-                    placeholder="Search..." 
-                    onkeyup="fetchSuggestions()" 
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Search..."
+                    onkeyup="fetchSuggestions()"
                     class="rounded-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
                     style="border-radius: 30px;">
                 <ion-icon name="search-outline" class="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500"></ion-icon>
@@ -102,32 +102,32 @@
                 @if (Auth::check())
                 <!-- User is logged in -->
                 <div class="relative inline-block text-left">
-                    <button 
+                    <button
                         id="profile-menu-button"
                         class="rounded-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
                         style="border-radius: 30px;"
                         onclick="toggleDropdown()">
-                        
+
                         {{ Auth::user()->email }}
                     </button>
 
                     <!-- Dropdown menu -->
-                    <div 
-                        id="dropdown-menu" 
+                    <div
+                        id="dropdown-menu"
                         class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-20">
-                        <a 
-                            href="" 
+                        <a
+                            href="{{ route('profile') }}"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-md">
                             Profil
                         </a>
-                        <a 
-                            href="" 
+                        <a
+                            href=""
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                             Histori
                         </a>
                         <form action="{{ route('logout') }}" method="POST" class="block">
                             @csrf
-                            <button 
+                            <button
                                 type="submit"
                                 class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-b-md">
                                 Logout
@@ -135,7 +135,7 @@
                         </form>
                     </div>
                 </div>
-                    
+
                 @else
                     <!-- User is not logged in -->
                     <a href="{{ route('login') }}" class="btn text-white">Login</a>

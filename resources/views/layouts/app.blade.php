@@ -7,6 +7,7 @@
     <title>@yield('title')</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.0/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
@@ -34,7 +35,7 @@
                         <span class="absolute -top-1 -right-2 px-1.5 py-0.5 bg-red-600 text-white text-xs rounded-full">3</span>
                     </button>
                 </a>
-            
+
                 <!-- Profile Dropdown -->
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open" class="flex items-center focus:outline-none">
@@ -68,8 +69,8 @@
                 <a href="{{ route('admin/products') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
                     <i class="bi bi-bell-fill mr-2"></i>Langganan
                 </a>
-                <a href="" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
-                    <i class="bi bi-bell-fill mr-2"></i>Pembayaran Langganan 
+                <a href="{{ route('admin.subscriptions.index') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
+                    <i class="bi bi-bell-fill mr-2"></i>Pembayaran Langganan
                 </a>
                 <a href="" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
                     <i class="bi bi-bell-fill mr-2"></i>History Transaksi
@@ -95,6 +96,6 @@
     <footer class="bg-gray-900 text-center py-4 text-gray-500">
         <p>&copy; 2024 E-koran BangsaOnline | All rights reserved.</p>
     </footer>
-    
+
 </body>
 </html>

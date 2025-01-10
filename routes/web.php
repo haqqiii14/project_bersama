@@ -12,7 +12,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SearchController;
-
+use App\Http\Controllers\SubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +48,7 @@ Route::get('/admin/notifications', [NotificationController::class, 'index'])->na
 
 
 //Normal Users Routes List
-Route::middleware(['auth', 'user-access:user'])->group(function () {
+Route::middleware(['auth', 'user-access:user','check.subscription'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::get('/profile', [UserController::class, 'userprofile'])->name('profile');
@@ -105,4 +105,6 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
 
     Route::delete('/admin/products/destroy/{id}', [ProductController::class, 'destroy'])->name('admin/products/destroy');
-});
+
+    Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('admin.subscriptions.index');
+    Route::patch('/subscriptions/{id}/approve', [SubscriptionController::class, 'approve'])->name('admin.subscriptions.approve');});

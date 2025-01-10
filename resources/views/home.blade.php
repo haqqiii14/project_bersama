@@ -76,6 +76,12 @@
         <button
             class="px-6 py-2 text-white font-semibold bg-gradient-to-r from-red-400 to-red-600 rounded-lg shadow-md hover:from-red-500 hover:to-red-700 hover:shadow-lg transition duration-300 ease-in-out">
             NEWSPAPER
+            <div class="mt-4">
+                <h2 class="text-xl font-bold">Total Waktu Sisa Paket</h2>
+                <p><strong>Total Hari:</strong> {{ session('total_days_left') }} hari</p>
+                <p><strong>Total Tahun:</strong> {{ session('total_years_left') }} tahun</p>
+                <p><strong>Total Bulan:</strong> {{ session('total_months_left') }} bulan</p>
+            </div>
         </button>
     </div>
     <!-- Bootstrap 5 Grid for Koran List -->

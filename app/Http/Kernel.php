@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'user-access' => \App\Http\Middleware\UserAccess::class,
+        'check.subscription' => \App\Http\Middleware\CheckSubscriptionTime::class,
     ];
 }

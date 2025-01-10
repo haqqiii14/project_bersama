@@ -125,7 +125,7 @@ class PaymentController extends Controller
             'amount' => $request->total_amount,
             'unique_code' => $request->uniqueCode,
             'cart_items' => json_encode(Cart::where('user_id', Auth::id())->get()),
-            'status' => 'unpaid', // Status awal
+            'status' => 'pending', // Status awal
             'due_date' => now()->addDays(1),
             'payment_proof' => $path,
         ]);
@@ -140,7 +140,7 @@ class PaymentController extends Controller
         ]);
 
         // Setelah bukti pembayaran berhasil diunggah, ubah status invoice ke "paid"
-        $invoice->update(['status' => 'paid']);
+        $invoice->update(['status' => 'unpaid']);
 
         //hapus session invoice_code
         session()->forget('invoice_code');

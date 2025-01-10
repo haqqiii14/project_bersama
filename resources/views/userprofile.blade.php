@@ -3,6 +3,12 @@
 @section('title', 'Profile Settings')
 
 @section('contents')
+<div class="mt-4">
+    <h2 class="text-xl font-bold">Total Waktu Sisa Paket</h2>
+    <p><strong>Total Hari:</strong> {{ session('total_days_left') }} hari</p>
+    <p><strong>Total Tahun:</strong> {{ session('total_years_left') }} tahun</p>
+    <p><strong>Total Bulan:</strong> {{ session('total_months_left') }} bulan</p>
+</div>
 <header class="bg-white shadow">
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold text-gray-900">
@@ -16,6 +22,12 @@
     @method('POST') <!-- Assuming you want to use POST method for the update -->
 
     <div>
+        <div class="mt-4">
+            <h2 class="text-xl font-bold">Total Waktu Sisa Paket</h2>
+            <p><strong>Total Hari:</strong> {{ session('total_days_left') }} hari</p>
+            <p><strong>Total Tahun:</strong> {{ session('total_years_left') }} tahun</p>
+            <p><strong>Total Bulan:</strong> {{ session('total_months_left') }} bulan</p>
+        </div>
         <label class="label">
             <span class="text-base label-text">Name</span>
         </label>

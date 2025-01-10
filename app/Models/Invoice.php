@@ -43,4 +43,9 @@ class Invoice extends Model
     {
         return $this->belongsTo(Subscription::class);
     }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'invoice_id', 'id');
+    }
 }
