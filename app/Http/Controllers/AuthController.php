@@ -21,19 +21,16 @@ class AuthController extends Controller
 
     public function home(Request $request)
     {
-// Handle search query
-        $search = $request->input('search');
+            $search = $request->input('search');
 
-        // Get korans based on search query (regular korans), with pagination (4 per page)
-        $korans = Koran::when($search, function ($query, $search) {
-            return $query->where('title', 'like', '%' . $search . '%')
-                         ->orWhere('description', 'like', '%' . $search . '%');
-        })->paginate(10); // Pagination for regular korans, set to 4 per page to align with the "Load More" feature
+            $korans = Koran::when($search, function ($query, $search) {
+                return $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%');
+            })->paginate(4);
 
-        // Get best seller korans (based on the highest views), limited to top 4
+            $langganan = Product::all();
 
-        // Return view with both korans and best seller korans
-        return view('home', compact('korans'));
+            return view('home', compact('korans', 'langganan'));
     }
 
 
