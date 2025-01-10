@@ -9,18 +9,27 @@ class Invoice extends Model
 {
     use HasFactory;
 
+    // Kolom yang bisa diisi secara massal
     protected $fillable = [
         'invoice_id',
         'user_id',
         'subscription_id',
         'amount',
+        'unique_code',
         'status',
         'due_date',
         'cart_items',
+        'payment_proof',
+    ];
+
+    // Cast kolom cart_items ke array saat diambil dari database
+    protected $casts = [
+        'cart_items' => 'array',
+        'due_date' => 'datetime',
     ];
 
     /**
-     * Get the user associated with the invoice.
+     * Relasi dengan tabel User.
      */
     public function user()
     {
@@ -28,26 +37,10 @@ class Invoice extends Model
     }
 
     /**
-     * Get the subscription associated with the invoice.
+     * Relasi dengan tabel Subscription.
      */
     public function subscription()
     {
         return $this->belongsTo(Subscription::class);
-    }
-
-    /**
-     * Decode the cart items JSON field.
-     */
-    public function getCartItemsAttribute($value)
-    {
-        return json_decode($value, true);
-    }
-
-    /**
-     * Encode the cart items JSON field before saving.
-     */
-    public function setCartItemsAttribute($value)
-    {
-        $this->attributes['cart_items'] = json_encode($value);
     }
 }

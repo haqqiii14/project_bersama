@@ -13,15 +13,18 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_id')->unique();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('subscription_id')->constrained()->onDelete('cascade');
-            $table->decimal('amount', 10, 2);
-            $table->string('status')->default('unpaid'); // e.g., unpaid, paid, cancelled
-            $table->date('due_date');
-            $table->json('cart_items'); // Store cart items as JSON
-            $table->timestamps();
+            $table->string('invoice_id')->unique(); // Unique invoice code
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Foreign key to users
+            $table->foreignId('subscription_id')->nullable()->constrained()->onDelete('cascade'); // Nullable for manual payments
+            $table->decimal('amount', 15, 2); // Amount with two decimal places
+            $table->integer('unique_code')->nullable(); // Unique payment code
+            $table->enum('status', ['unpaid', 'paid', 'cancelled'])->default('unpaid'); // Payment status
+            $table->date('due_date')->nullable(); // Due date for payment
+            $table->json('cart_items')->nullable(); // Store cart items as JSON
+            $table->string('payment_proof')->nullable(); // Store payment proof path
+            $table->timestamps(); // created_at and updated_at
         });
+
     }
 
 

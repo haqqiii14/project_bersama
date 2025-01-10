@@ -78,18 +78,20 @@ class PaymentController extends Controller
     {
         $userId = Auth::id();
         $invoiceCode = session('invoice_code');
-        $cartTotal = Cart::where('user_id', $userId)
+        $cart = Cart::where('user_id', $userId)
             ->join('product_prices', 'carts.product_price_id', '=', 'product_prices.id')
             ->sum('product_prices.price');
-
-        $taxAmount = $cartTotal * 0.1;
 
         //tampilkan bank transfer
         $bankTransfer = Bank::all();
 
+        $taxAmount = $cart * 0.11;
+
+        $cartTotal = $cart + $taxAmount - session('discount');
+
         // Generate unique code
         $uniqueCode = rand(100, 999);
-        $totalAmount = $cartTotal + $taxAmount + $uniqueCode;
+        $totalAmount = $cartTotal + $uniqueCode;
 
         return view('payments.index', compact('invoiceCode', 'cartTotal', 'uniqueCode', 'totalAmount', 'taxAmount', 'bankTransfer'));
     }
@@ -98,62 +100,62 @@ class PaymentController extends Controller
      * Submit manual payment proof.
      */
     public function submitManualPayment(Request $request)
-    {
-        // Validate the uploaded file and other inputs
-        $request->validate([
-            'proof' => 'required|mimes:jpeg,jpg,png|max:2048', // Validates the image file
-            'total_amount' => 'required|numeric' // Validates that total amount is provided and is numeric
+{
+    // Validasi input
+    $request->validate([
+        'proof' => 'required|mimes:jpeg,jpg,png|max:2048',
+        'total_amount' => 'required|numeric',
+        'bank' => 'required|string',
+    ]);
+
+    DB::beginTransaction();
+
+    try {
+        // Proses upload file bukti pembayaran
+        if ($request->hasFile('proof') && $request->file('proof')->isValid()) {
+            $path = $request->file('proof')->store('payment_proofs', 'public');
+        } else {
+            throw new \Exception("File bukti pembayaran tidak valid.");
+        }
+
+        // Simpan data invoice
+        $invoice = Invoice::create([
+            'invoice_id' => session('invoice_code'),
+            'user_id' => Auth::id(),
+            'amount' => $request->total_amount,
+            'unique_code' => $request->uniqueCode,
+            'cart_items' => json_encode(Cart::where('user_id', Auth::id())->get()),
+            'status' => 'unpaid', // Status awal
+            'due_date' => now()->addDays(1),
+            'payment_proof' => $path,
         ]);
 
-        // Start a database transaction to ensure all operations are successful before commit
-        DB::beginTransaction();
+        // Simpan data pembayaran
+        Payment::create([
+            'invoice_id' => $invoice->id,
+            'payment_method' => $request->bank,
+            'amount' => $request->total_amount,
+            'status' => 'pending',
+            'payment_date' => now(),
+        ]);
 
-        try {
-            // Check if the file is valid and save it in the 'payment_proofs' directory in public storage
-            if ($request->hasFile('proof') && $request->file('proof')->isValid()) {
-                $path = $request->file('proof')->store('payment_proofs', 'public');
-            } else {
-                throw new \Exception("Invalid file upload.");
-            }
+        // Setelah bukti pembayaran berhasil diunggah, ubah status invoice ke "paid"
+        $invoice->update(['status' => 'paid']);
 
-            // Create a new invoice record
-            $transaction = new Invoice();
-            $transaction->user_id = Auth::id();
-            $transaction->subscription_id = 1;
-            $transaction->cart_items = 'manual';
-            $transaction->invoice_id = session('invoice_code'); // Assumes 'invoice_code' is stored in the session
-            $transaction->amount = $request->total_amount;
-            $transaction->status = 'pending';
-            $transaction->due_date = now()->addDays(1);
-            $transaction->save();
+        //hapus session invoice_code
+        session()->forget('invoice_code');
 
-            // Create a new payment record
-            Payment::create([
-                'invoice_id' => $transaction->id,
-                'payment_method' => $request->bank,
-                'amount' => $request->total_amount,
-                'status' => 'pending',
-                'payment_date' => now(),
-                'proof' => $path,
-            ]);
+        // Hapus item dari keranjang setelah pembayaran
+        Cart::where('user_id', Auth::id())->delete();
 
-            // If all operations were successful, commit the transaction
-            DB::commit();
+        DB::commit();
 
-            // Redirect the user with a success message
-            return redirect()->route('cart.index')->with('success', 'Bukti pembayaran berhasil diunggah. Silakan tunggu konfirmasi.');
-        } catch (\Exception $e) {
-            // Roll back the transaction in case of an error
-            DB::rollBack();
+        return redirect()->route('cart.index')->with('success', 'Bukti pembayaran berhasil diunggah! Invoice Anda telah dibayar.');
+    } catch (\Exception $e) {
+        DB::rollBack();
 
-            // Log the error with detailed context
-            // // Log::error('Payment submission failed for user ' . Auth::id() . ' with error: ' . $e->getMessage(), [
-            //     'invoice_id' => session('invoice_code'),
-            //     'amount' => $request->total_amount
-            // ]);
-
-            // Redirect back with error message, maintaining old input for user correction
-            return redirect()->back()->withInput()->with('error', 'There was a problem submitting your payment. Please try again.');
-        }
+        return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses pembayaran: ' . $e->getMessage());
     }
+}
+
 }

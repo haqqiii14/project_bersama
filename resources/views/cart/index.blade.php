@@ -55,7 +55,7 @@
 
         <div class="container">
             <div class="row">
-                
+
                 <!-- Cart Items -->
                 @if (session('invoice_code'))
                     <div class="alert alert-info d-flex align-items-center justify-content-between mt-3">
@@ -156,7 +156,7 @@
                                 <span>Total:</span>
                                 <span class="fw-bold text-danger text-lg">
                                     Rp
-                                    {{ number_format($cartItems->sum(fn($item) => $item->productPrice->price) * 1.11, 0, ',', '.') }}
+                                    {{ number_format($cartItems->sum(fn($item) => $item->productPrice->price) * 0.11, 0, ',', '.') }}
                                 </span>
                             </p>
 
@@ -296,7 +296,7 @@
                         <p>Silakan pilih metode pembayaran untuk melanjutkan:</p>
                         <button id="pay-button" class="btn btn-primary w-100">
                             <ion-icon name="card-outline" class="me-2"></ion-icon>Bayar dengan Payment Gateway
-                        </button>                        
+                        </button>
                         <form action="" id="submit_form" method="POST">
                             @csrf
                             <input type="hidden" name="json" id="json_callback">
@@ -317,7 +317,7 @@
         <script type="text/javascript">
             // For example trigger on button clicked, or any time you need
             //agar snap_token 0
-           
+
             var payButton = document.getElementById('pay-button');
             payButton.addEventListener('click', function () {
               // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
@@ -343,7 +343,7 @@
                 }
               })
             });
-      
+
             function send_response_to_form(result){
               document.getElementById('json_callback').value = JSON.stringify(result);
               $('#submit_form').submit();
