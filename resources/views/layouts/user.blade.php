@@ -42,7 +42,7 @@
             </a>
         </div>
         <button type="button" class="button-outline">
-            Rabu, 18 Desember 2024 20:37
+            <div id="current-time" class="text-lg font-medium"></div>
         </button>
         <!-- Social Profile Icons -->
         <div class="social-profile">
@@ -72,10 +72,21 @@
         <div class="max-w-screen-xl mx-auto flex justify-between items-center py-4 px-6">
             <!-- Search Bar -->
             <div class="relative search-bar">
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    placeholder="Search..." 
+                    onkeyup="fetchSuggestions()" 
+                    class="rounded-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    style="border-radius: 30px;">
+                <ion-icon name="search-outline" class="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500"></ion-icon>
+                <div id="suggestions-box" class="suggestions"></div>
+            </div>
+            <!-- <div class="relative search-bar">
                 <input type="text" id="search-input" placeholder="Search..." onkeyup="fetchSuggestions()">
                 <ion-icon name="search-outline"></ion-icon>
                 <div id="suggestions-box" class="suggestions"></div>
-            </div>
+            </div> -->
 
             <!-- Navigation Links -->
             <div class="flex space-x-4">
@@ -89,18 +100,42 @@
                     <ion-icon name="cart-sharp"></ion-icon>
                 </a>
                 @if (Auth::check())
-                    <!-- User is logged in -->
-                    <a href="#" class="hover:underline text-white">
-                        <ion-icon name="person-sharp" style="color: white;"></ion-icon>
-                        {{ Auth::user()->name }}
-                    </a>
-                    <a href="{{ route('logout') }}" class="hover:underline text-white"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Logout
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                <!-- User is logged in -->
+                <div class="relative inline-block text-left">
+                    <button 
+                        id="profile-menu-button"
+                        class="rounded-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                        style="border-radius: 30px;"
+                        onclick="toggleDropdown()">
+                        
+                        {{ Auth::user()->email }}
+                    </button>
+
+                    <!-- Dropdown menu -->
+                    <div 
+                        id="dropdown-menu" 
+                        class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-20">
+                        <a 
+                            href="" 
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-md">
+                            Profil
+                        </a>
+                        <a 
+                            href="" 
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            Histori
+                        </a>
+                        <form action="{{ route('logout') }}" method="POST" class="block">
+                            @csrf
+                            <button 
+                                type="submit"
+                                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-b-md">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                    
                 @else
                     <!-- User is not logged in -->
                     <a href="{{ route('login') }}" class="btn text-white">Login</a>
@@ -145,9 +180,9 @@
             <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
                 <div class="md:flex md:justify-between">
                     <div class="mb-6 md:mb-0">
-                        <a href="https://flowbite.com/" class="flex items-center">
+                        <a href="https://bangsaonline.com" class="flex items-center">
                             <img src="https://bangsaonline.com/img/logo.png?rand=140" class="h-15 me-3"
-                                alt="FlowBite Logo" />
+                                alt="bangsaonline Logo" />
                             <ul class="social-share-two">
                                 <li><a target="_blank" href="https://www.facebook.com/bangsaonline">
                                         <ion-icon name="logo-facebook"></ion-icon>
@@ -222,6 +257,60 @@
 
 </body>
 <!-- Swiper Script -->
+<script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-menu');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', function (event) {
+            const dropdown = document.getElementById('dropdown-menu');
+            const button = document.getElementById('profile-menu-button');
+            if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+    </script>
+
+<script>
+    function updateCurrentTime() {
+        const timeElement = document.getElementById("current-time");
+
+        // Mendapatkan waktu saat ini
+        const now = new Date();
+
+        // Hari dalam bahasa Indonesia
+        const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+        const dayName = days[now.getDay()];
+
+        // Bulan dalam bahasa Indonesia
+        const months = [
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        ];
+        const monthName = months[now.getMonth()];
+
+        // Format waktu
+        const date = now.getDate();
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0'); // Format jam 2 digit
+        const minutes = String(now.getMinutes()).padStart(2, '0'); // Format menit 2 digit
+
+        // Menyusun string waktu
+        const formattedTime = `${dayName}, ${date} ${monthName} ${year} ${hours}:${minutes}`;
+
+        // Menampilkan waktu di elemen
+        timeElement.textContent = formattedTime;
+    }
+
+    // Memperbarui waktu setiap menit
+    setInterval(updateCurrentTime, 60000);
+
+    // Memanggil fungsi saat halaman dimuat
+    updateCurrentTime();
+</script>
+
 <script>
     function fetchSuggestions() {
         const input = document.getElementById('search-input').value;

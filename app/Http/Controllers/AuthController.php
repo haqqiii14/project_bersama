@@ -21,16 +21,20 @@ class AuthController extends Controller
 
     public function home(Request $request)
     {
-            $search = $request->input('search');
+        // Handle search query
+        $search = $request->input('search');
 
-            $korans = Koran::when($search, function ($query, $search) {
-                return $query->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%');
-            })->paginate(4);
+        // Get korans based on search query (regular korans), with pagination (4 per page)
+        $korans = Koran::when($search, function ($query, $search) {
+            return $query->where('title', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%');
+        })->paginate(10); // Pagination for regular korans, set to 4 per page to align with the "Load More" feature
 
-            $langganan = Product::all();
+        // Get best seller korans (based on the highest views), limited to top 4
+        $langganan = Product::all();
 
-            return view('home', compact('korans', 'langganan'));
+        // Return view with both korans and best seller korans
+        return view('home', compact('korans', 'langganan'));
     }
 
 
@@ -40,18 +44,22 @@ class AuthController extends Controller
     }
 
     public function registerSave(Request $request)
+
     {
+        //dd($request->all());
         Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required|confirmed'
+            'password' => 'required'
         ])->validate();
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'type' => "1"
+            'phone' => $request->phone,
+            'birthday' => $request->birthday,
+            'type' => "0"
         ]);
 
         return redirect()->route('login');
@@ -94,7 +102,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login'); // Redirect ke halaman login
+        return redirect()->route('homepage'); // Redirect ke halaman login
     }
 
     public function profile()

@@ -49,7 +49,7 @@
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                             <input type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Password" required>
                         </div>
-                    </form>
+                    
                 </div>
                 <hr class="border-gray-300 dark:border-gray-700">
                 <!-- Bagian 2: Fullname, Phone, dan Birthday -->
@@ -60,7 +60,7 @@
                 </div>
                 <div class="p-6 space-y-6">
                     <!-- Bagian 2: Personal Information -->
-                    <form action="{{ route('register.save') }}" method="POST" class="space-y-4 md:space-y-6">
+                    
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fullname</label>
                             <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Fullname" required>
