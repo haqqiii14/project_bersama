@@ -125,7 +125,7 @@ class PaymentController extends Controller
             'amount' => $request->total_amount,
             'unique_code' => $request->uniqueCode,
             'cart_items' => json_encode(Cart::where('user_id', Auth::id())->get()),
-            'status' => 'pending', // Status awal
+            'status' => 'unpaid', // Status awal
             'due_date' => now()->addDays(1),
             'payment_proof' => $path,
         ]);

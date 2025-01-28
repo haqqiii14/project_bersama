@@ -64,40 +64,64 @@
                         alt="Koran Jawa Pos" class="img-fluid shadow rounded">
                 </div>
                 <div class="col-md-8">
-                    <h2 class="title">Koran Jawa Pos</h2>
+                    <h2 class="title">{{ $koran->title }}</h2>
                     <table class="table table-borderless">
                         <tr>
                             <th>Edition</th>
-                            <td>: 18 December 2024</td>
+                            <td>: {{ $koran->edisi }}</td>
                         </tr>
                         <tr>
                             <th>Pages</th>
-                            <td>: 20</td>
+                            <td>: {{ $koran->pages }}</td>
                         </tr>
                         <tr>
                             <th>Publisher</th>
-                            <td>: PT. Jawa Pos Koran</td>
+                            <td>: {{ $koran->publisher }}</td>
                         </tr>
                         <tr>
                             <th>Description</th>
-                            <td>: Koran Jawa Pos, 18 Desember 2024</td>
+                            <td>: {{ $koran->description }}</td>
                         </tr>
                     </table>
-                    <form action="{{ route('cart.add') }}" method="POST">
-                        @csrf
-                    <div class="mt-4">
-                        <label for="package" class="fw-bold">Package price:</label>
-                        <select id="package" name="product_price_id" class="form-select mt-2">
-                            @foreach ($product->prices as $price)
-                                <option value="{{ $price->id }}">{{ $price->title }} - Rp
-                                    {{ number_format($price->price, 0, ',', '.') }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <button type="submit" class="btn btn-primary mt-3">Add to Cart</button>
-                    </form>
+
+                    @if (!Auth::check())
+                        <!-- Jika belum login -->
+                        <p class="mt-4 text-danger">Anda harus login untuk membeli koran ini.</p>
+                        <a href="{{ route('login') }}" class="btn btn-primary mt-2">Login</a>
+                    @else
+                        @php
+                            $isSubscribed = false;
+                            if ($subscription && $subscription->status === 'active') {
+                                $currentDate = now();
+                                if ($subscription->start_date <= $currentDate && $subscription->end_date >= $currentDate) {
+                                    $isSubscribed = true;
+                                }
+                            }
+                        @endphp
+
+                        @if ($isSubscribed)
+                            <!-- Jika sudah berlangganan -->
+                            <a href="{{ route('readNews', ['productId' => $product->id, 'koranId' => $koran->id]) }}" class="btn btn-success mt-3">Baca Berita</a>
+                        @else
+                            <!-- Jika belum berlangganan atau langganan habis -->
+                            <form action="{{ route('cart.add') }}" method="POST">
+                                @csrf
+                                <div class="mt-4">
+                                    <label for="package" class="fw-bold">Package price:</label>
+                                    <select id="package" name="product_price_id" class="form-select mt-2">
+                                        @foreach ($product->prices as $price)
+                                            <option value="{{ $price->id }}">{{ $price->title }} - Rp
+                                                {{ number_format($price->price, 0, ',', '.') }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <button type="submit" class="btn btn-primary mt-3">Add to Cart</button>
+                            </form>
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection

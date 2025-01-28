@@ -24,6 +24,17 @@ class SubscriptionController extends Controller
         return view('admin.acc.index', compact('invoices'));
     }
 
+    public function subscriptionHistory()
+    {
+        // Ambil data dari invoices dan payments dengan status pending
+        $invoices = Invoice::whereHas('payments', function ($query) {
+            $query->where('status', 'paid');
+        })->get();
+
+
+        return view('admin.acc.history', compact('invoices'));
+    }
+
     /**
      * Menyetujui pembayaran dan memindahkan data ke tabel subscriptions.
      */

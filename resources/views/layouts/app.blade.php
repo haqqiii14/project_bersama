@@ -72,7 +72,7 @@
                 <a href="{{ route('admin.subscriptions.index') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
                     <i class="bi bi-bell-fill mr-2"></i>Pembayaran Langganan
                 </a>
-                <a href="" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
+                <a href="{{ route('admin.subscriptions.history') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
                     <i class="bi bi-bell-fill mr-2"></i>History Transaksi
                 </a>
                 <a href="{{ route('admin/profile') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">

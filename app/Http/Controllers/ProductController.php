@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\koran;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Subscription;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -135,20 +137,73 @@ class ProductController extends Controller
 
     public function detailKoran($productId, $koranId)
     {
-        // Optionally, validate that the product exists
+        // Cek apakah produk ada
         $product = Product::find($productId);
         if (!$product) {
             return redirect()->route('home')->with('error', 'Product not found.');
         }
 
-        // Find the koran associated with this product
+        // Cek apakah koran terkait dengan produk ini
         $koran = $product->korans()->where('id', $koranId)->first();
-
         if (!$koran) {
             return redirect()->route('home')->with('error', 'Koran not found.');
         }
 
-        // Return the view with the koran details
-        return view('cart.detail', compact('koran', 'product'));
+        // Cek status langganan jika user sudah login
+        $subscription = null;
+        $isSubscribed = false;
+        if (Auth::check()) {
+            $subscription = Subscription::where('user_id', Auth::id())
+                ->where('product_id', $product->id)
+                ->where('status', 'active')
+                ->first();
+
+            if ($subscription) {
+                $currentDate = now();
+                if ($subscription->start_date <= $currentDate && $subscription->end_date >= $currentDate) {
+                    $isSubscribed = true; // Langganan masih aktif
+                }
+            }
+        }
+
+        // Kirim data ke view
+        return view('cart.detail', compact('koran', 'product', 'subscription', 'isSubscribed'));
     }
+
+
+    public function readNews($productId, $koranId)
+    {
+        // Cek apakah produk ada
+        $product = Product::find($productId);
+        if (!$product) {
+            return redirect()->route('home')->with('error', 'Product not found.');
+        }
+
+        // Cek apakah koran terkait dengan produk ini
+        $koran = $product->korans()->where('id', $koranId)->first();
+        if (!$koran) {
+            return redirect()->route('home')->with('error', 'Koran not found.');
+        }
+
+        // Cek status langganan
+        $isSubscribed = false; // Defaultnya pengguna belum berlangganan
+        if (Auth::check()) {
+            $subscription = Subscription::where('user_id', Auth::id())
+                ->where('product_id', $product->id)
+                ->where('status', 'active')
+                ->first();
+
+            if ($subscription) {
+                $currentDate = now(); // Tanggal hari ini
+                if ($subscription->start_date <= $currentDate && $subscription->end_date >= $currentDate) {
+                    $isSubscribed = true; // Langganan masih aktif
+                }
+            }
+        }
+
+        // Kirim data ke view
+        return view('news.read', compact('koran', 'product', 'isSubscribed'));
+    }
+
+
 }

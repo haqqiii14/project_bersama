@@ -29,6 +29,7 @@ use App\Http\Controllers\SubscriptionController;
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::get('/newspaper/{id}', [ProductController::class, 'detail'])->name('koran.detail');
 Route::get('/newspaper/{productId}/{koranId}', [ProductController::class, 'detailKoran'])->name('detailKoran');
+Route::get('/newspaper/{productId}/{koranId}/baca', [ProductController::class, 'readNews'])->name('readNews');
 
 
 Route::controller(AuthController::class)->group(function () {
@@ -108,3 +109,4 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('admin.subscriptions.index');
     Route::patch('/subscriptions/{id}/approve', [SubscriptionController::class, 'approve'])->name('admin.subscriptions.approve');});
+    Route::get('/history/subscriptions', [SubscriptionController::class, 'subscriptionHistory'])->name('admin.subscriptions.history');
