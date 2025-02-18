@@ -62,10 +62,6 @@
     </div>
     <div class="nav-social">
         <ul>
-            <li><a href="https://play.google.com/store/apps/details?id=com.jawapos.epaper" target="_blank"><img
-                        src="https://digital.jawapos.com/images/andropng.png"></a></li>
-            <li><a href="https://apps.apple.com/id/app/jawa-pos-digital-reader/id1467720251" target="_blank"><img
-                        src="https://digital.jawapos.com/images/iospng.png"></a></li>
             <li>
                 <div class="pt-1"><a href="/promo" class="button-promo-all">Promo Lainnya</a></div>
             </li>
@@ -73,14 +69,6 @@
     </div>
     <!-- Category Buttons -->
     <div class="flex justify-center space-x-4 mt-6">
-        <button
-            class="px-6 py-2 text-white font-semibold bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg shadow-md hover:from-blue-500 hover:to-blue-700 hover:shadow-lg transition duration-300 ease-in-out">
-            MAGAZINE
-        </button>
-        <button
-            class="px-6 py-2 text-white font-semibold bg-gradient-to-r from-green-400 to-green-600 rounded-lg shadow-md hover:from-green-500 hover:to-green-700 hover:shadow-lg transition duration-300 ease-in-out">
-            BOOK
-        </button>
         <button
             class="px-6 py-2 text-white font-semibold bg-gradient-to-r from-red-400 to-red-600 rounded-lg shadow-md hover:from-red-500 hover:to-red-700 hover:shadow-lg transition duration-300 ease-in-out">
             NEWSPAPER
@@ -98,7 +86,7 @@
         </ol>
     </nav>
 
-    <div class="row g-4">
+    <div class="row g-4 mb-5">
         @forelse ($product->korans as $koran) <!-- Corrected loop -->
             <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                 <a href="{{ route('detailKoran', ['productId' => $product->id, 'koranId' => $koran->id]) }}" class="text-decoration-none text-dark">
