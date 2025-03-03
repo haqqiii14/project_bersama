@@ -3,7 +3,7 @@
 @section('title', 'Koran List')
 
 @section('contents')
-<div>
+<div x-data="{ showModal: false, modalImage: '' }" class="relative">
     <h1 class="font-bold text-2xl ml-3">History Pembayaran Langganan</h1>
     {{-- <a href="{{ route('admin.korans.create') }}" class="text-white float-right bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Koran Issue</a> --}}
     <hr />
@@ -55,17 +55,6 @@
                         @endif
                     </td>
                 </tr>
-
-                {{-- Modal untuk Bukti Pembayaran --}}
-                <div x-data="{ showModal: false, modalImage: '' }">
-                    <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                        <div class="bg-white p-5 rounded-lg shadow-lg max-w-lg w-full">
-                            <button @click="showModal = false" class="float-right text-gray-600 hover:text-gray-900">&times;</button>
-                            <h2 class="text-lg font-bold mb-4">Bukti Pembayaran</h2>
-                            <img :src="modalImage" alt="Bukti Pembayaran" class="rounded-lg shadow-md">
-                        </div>
-                    </div>
-                </div>
             @empty
                 <tr>
                     <td colspan="7" class="text-center py-4">Tidak ada invoice pending</td>
@@ -73,5 +62,14 @@
             @endforelse
         </tbody>
     </table>
+
+    <!-- Modal untuk Bukti Pembayaran -->
+    <div x-show="showModal" x-cloak class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-5 rounded-lg shadow-lg max-w-lg w-full relative">
+            <button @click="showModal = false" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">&times;</button>
+            <h2 class="text-lg font-bold mb-4">Bukti Pembayaran</h2>
+            <img :src="modalImage" alt="Bukti Pembayaran" class="rounded-lg shadow-md">
+        </div>
+    </div>
 </div>
 @endsection
