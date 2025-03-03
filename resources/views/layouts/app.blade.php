@@ -47,7 +47,13 @@
                     <div x-show="open" @click.away="open = false" class="absolute right-0 w-48 bg-white text-gray-700 mt-2 rounded-lg shadow-lg">
                         <a href="#" class="block px-4 py-2 hover:bg-gray-200">My Profile</a>
                         <a href="#" class="block px-4 py-2 hover:bg-gray-200">Settings</a>
-                        <a href="{{ route('logout') }}" class="block px-4 py-2 hover:bg-gray-200">Logout</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 hover:bg-gray-200">
+                            Logout
+                        </a>
+                        <!-- <a href="{{ route('logout') }}" class="block px-4 py-2 hover:bg-gray-200">Logout</a> -->
                     </div>
                 </div>
             </div>
@@ -78,9 +84,15 @@
                 <a href="{{ route('admin/profile') }}" class="block py-3 px-4 hover:bg-gray-700 hover:text-blue-500">
                     <i class="bi bi-person-circle mr-2"></i>Profile
                 </a>
-                <a href="{{ route('logout') }}" class="block py-3 px-4 mt-6 border-t border-gray-700 hover:bg-gray-700 hover:text-blue-500">
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block py-3 px-4 mt-6 border-t border-gray-700 hover:bg-gray-700 hover:text-blue-500">
                     <i class="bi bi-box-arrow-in-right mr-2"></i>Logout
                 </a>
+                <!-- <a href="{{ route('logout') }}" class="block py-3 px-4 mt-6 border-t border-gray-700 hover:bg-gray-700 hover:text-blue-500">
+                    <i class="bi bi-box-arrow-in-right mr-2"></i>Logout
+                </a> -->
             </nav>
         </aside>
 

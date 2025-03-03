@@ -62,10 +62,6 @@
     </div>
     <div class="nav-social">
         <ul>
-            <li><a href="https://play.google.com/store/apps/details?id=com.jawapos.epaper" target="_blank"><img
-                        src="https://digital.jawapos.com/images/andropng.png"></a></li>
-            <li><a href="https://apps.apple.com/id/app/jawa-pos-digital-reader/id1467720251" target="_blank"><img
-                        src="https://digital.jawapos.com/images/iospng.png"></a></li>
             <li>
                 <div class="pt-1"><a href="/promo" class="button-promo-all">Promo Lainnya</a></div>
             </li>
@@ -78,14 +74,13 @@
             NEWSPAPER
             <div class="mt-4">
                 <h2 class="text-xl font-bold">Total Waktu Sisa Paket</h2>
-                <p><strong>Total Hari:</strong> {{ session('total_days_left') }} hari</p>
-                <p><strong>Total Tahun:</strong> {{ session('total_years_left') }} tahun</p>
-                <p><strong>Total Bulan:</strong> {{ session('total_months_left') }} bulan</p>
+                <p><strong>Hari:</strong> {{ session('total_days_left') }} hari / <strong>Tahun:</strong> {{ session('total_years_left') }} tahun / <strong>Bulan:</strong> {{ session('total_months_left') }} bulan</p>
+                
             </div>
         </button>
     </div>
     <!-- Bootstrap 5 Grid for Koran List -->
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <div class="row g-4">
             @forelse ($langganan as $koran)
                 <!-- Single Koran Item -->
